@@ -3,4 +3,5 @@ project(ComputacaoGraficaAJB C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ComputacaoGraficaAJB main.c)
+add_executable(ComputacaoGraficaAJB capitao.c)
+target_link_libraries(ComputacaoGraficaAJB -lGL -lglut)
