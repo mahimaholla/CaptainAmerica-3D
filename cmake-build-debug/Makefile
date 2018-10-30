@@ -123,32 +123,32 @@ ComputacaoGraficaAJB/fast:
 	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/build
 .PHONY : ComputacaoGraficaAJB/fast
 
-capitao.o: capitao.c.o
+lenhador.o: lenhador.c.o
 
-.PHONY : capitao.o
+.PHONY : lenhador.o
 
 # target to build an object file
-capitao.c.o:
-	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o
-.PHONY : capitao.c.o
+lenhador.c.o:
+	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o
+.PHONY : lenhador.c.o
 
-capitao.i: capitao.c.i
+lenhador.i: lenhador.c.i
 
-.PHONY : capitao.i
+.PHONY : lenhador.i
 
 # target to preprocess a source file
-capitao.c.i:
-	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.i
-.PHONY : capitao.c.i
+lenhador.c.i:
+	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.i
+.PHONY : lenhador.c.i
 
-capitao.s: capitao.c.s
+lenhador.s: lenhador.c.s
 
-.PHONY : capitao.s
+.PHONY : lenhador.s
 
 # target to generate assembly for a file
-capitao.c.s:
-	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.s
-.PHONY : capitao.c.s
+lenhador.c.s:
+	$(MAKE) -f CMakeFiles/ComputacaoGraficaAJB.dir/build.make CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.s
+.PHONY : lenhador.c.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... ComputacaoGraficaAJB"
-	@echo "... capitao.o"
-	@echo "... capitao.i"
-	@echo "... capitao.s"
+	@echo "... lenhador.o"
+	@echo "... lenhador.i"
+	@echo "... lenhador.s"
 .PHONY : help
 
 

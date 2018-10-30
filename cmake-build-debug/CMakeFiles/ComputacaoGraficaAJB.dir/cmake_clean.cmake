@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o"
+  "CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o"
   "ComputacaoGraficaAJB.pdb"
   "ComputacaoGraficaAJB"
 )

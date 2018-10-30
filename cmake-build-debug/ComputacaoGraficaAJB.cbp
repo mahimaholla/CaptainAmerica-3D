@@ -78,7 +78,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/capitao.c">
+		<Unit filename="/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/lenhador.c">
 			<Option target="ComputacaoGraficaAJB"/>
 		</Unit>
 		<Unit filename="/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/CMakeLists.txt">

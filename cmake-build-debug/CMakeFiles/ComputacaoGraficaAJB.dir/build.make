@@ -57,27 +57,27 @@ include CMakeFiles/ComputacaoGraficaAJB.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/ComputacaoGraficaAJB.dir/flags.make
 
-CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o: CMakeFiles/ComputacaoGraficaAJB.dir/flags.make
-CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o: ../capitao.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/capitao.c
+CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o: CMakeFiles/ComputacaoGraficaAJB.dir/flags.make
+CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o: ../lenhador.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/lenhador.c
 
-CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/capitao.c > CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.i
+CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/lenhador.c > CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.i
 
-CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/capitao.c -o CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.s
+CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/lenhador.c -o CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.s
 
 # Object files for target ComputacaoGraficaAJB
 ComputacaoGraficaAJB_OBJECTS = \
-"CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o"
+"CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o"
 
 # External object files for target ComputacaoGraficaAJB
 ComputacaoGraficaAJB_EXTERNAL_OBJECTS =
 
-ComputacaoGraficaAJB: CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o
+ComputacaoGraficaAJB: CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o
 ComputacaoGraficaAJB: CMakeFiles/ComputacaoGraficaAJB.dir/build.make
 ComputacaoGraficaAJB: CMakeFiles/ComputacaoGraficaAJB.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable ComputacaoGraficaAJB"
