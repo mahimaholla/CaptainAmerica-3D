@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/ComputacaoGraficaAJB.dir/main.c.o  -o ComputacaoGraficaAJB 
+/usr/bin/cc -g   CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o  -o ComputacaoGraficaAJB -lGL -lglut 

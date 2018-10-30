@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/main.c" "/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/main.c.o"
+  "/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/capitao.c" "/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
