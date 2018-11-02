@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/ComputacaoGraficaAJB.dir/lenhador.c.o  -o ComputacaoGraficaAJB -lGL -lglut -lGLU 
+/usr/bin/cc -g   CMakeFiles/ComputacaoGraficaAJB.dir/capitao.c.o  -o ComputacaoGraficaAJB -lGL -lglut -lGLU -lm 
