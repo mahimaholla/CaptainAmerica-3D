@@ -14,6 +14,7 @@ GLfloat correcaoAspecto, anguloProjecao = 45.0;
 float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f;
 float anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f;
 float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
+float posicaoPersonagemX = 0.0f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -40,7 +41,38 @@ void redimensionarDesenho(GLsizei largura, GLsizei altura) {
     ProjecaoCena();
 }
 
-// TODO iluminação
+/* ILUMINACAO DA CENA */
+void iluminarCenario() {
+    GLfloat luzAmbiente[4] = {0.3, 0.3, 0.3, 1.0};
+    GLfloat luzDifusa[4] = {0.5, 0.5, 0.5, 1.0};
+    GLfloat luzEspecular[4] = {0.5, 0.5, 0.5, 1.0};
+    GLfloat posicaoLuz[4] = {0.0, 75.0, 100.0f, 1.0};
+    GLfloat objetoAmbiente[4] = {0.5, 0.0, 0.0, 1.0};
+    GLfloat objetoDifusa[4] = {1.0,0.0,0.0,1.0};
+    GLfloat especularidade[4] = {0.5, 0.5, 0.5, 1.0};
+    GLint especMaterial = 20;
+
+    glClearColor(0.74902, 0.847059, 0.847059, 0.0);
+
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+
+    glMaterialfv (GL_FRONT_AND_BACK, GL_AMBIENT, objetoAmbiente);
+    glMaterialfv (GL_FRONT_AND_BACK, GL_DIFFUSE, objetoDifusa);
+    glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade);
+    glMateriali(GL_FRONT,GL_SHININESS, especMaterial);
+
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+}
+
+// TODO aplicação de textura
 // TODO fila de escudos
 // TODO desenho do escudo
 
@@ -494,6 +526,10 @@ void pernaEsquerda() {
 
 void desenharPersonagem() {
     glPushMatrix();
+        glTranslatef(posicaoPersonagemX, 0.0f, 0.0f);
+        glTranslatef(0.0f, posicaoPersonagemY, 0.0f);
+        glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
+
         cabeca();
         tronco();
         bracoDireito();
@@ -554,7 +590,6 @@ void desenharCenario() {
 
 /* DESENHAR CENA COMPLETA */
 void desenharCenaCompleta() {
-    glClearColor(0.74902, 0.847059, 0.847059, 0.0);
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -636,6 +671,34 @@ void leituraTeclado(unsigned char tecla, int x, int y) {
     glutPostRedisplay();
 }
 
+/* MOVIMENTACAO DO PERSONAGEM */
+void leituraSetas(int tecla, int x, int y) {
+    switch (tecla) {
+        case GLUT_KEY_RIGHT:
+            posicaoPersonagemX += 0.005;
+            break;
+
+        case GLUT_KEY_LEFT:
+            posicaoPersonagemX -= 0.005;
+            break;
+
+        case GLUT_KEY_UP:
+            posicaoPersonagemZ += 0.005;
+            break;
+
+        case GLUT_KEY_DOWN:
+            posicaoPersonagemZ -= 0.005;
+            break;
+
+        default:
+            glutIdleFunc(NULL);
+            break;
+    }
+
+    ProjecaoCena();
+    glutPostRedisplay();
+}
+
 /* FUNCAO PRINCIPAL */
 int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
@@ -646,8 +709,10 @@ int main(int argc, char *argv[]) {
 
     glutReshapeFunc(redimensionarDesenho);
     glutKeyboardFunc(leituraTeclado);
+    glutSpecialFunc(leituraSetas);
 
     glutDisplayFunc(desenharCenaCompleta);
+    iluminarCenario();
     glutMainLoop();
     return 0;
 }
