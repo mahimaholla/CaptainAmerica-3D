@@ -11,10 +11,11 @@ int alturaJanela = 700, larguraJanela = 700;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
-float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f;
-float anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f;
+float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f;
 float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
 float posicaoPersonagemX = 0.0f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f;
+float anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f, anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f;
+float anguloOmbroE = 0.0f, anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f, auxCotoveloE = 1.0f, auxCotoveloD = 1.0f;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -44,13 +45,13 @@ void redimensionarDesenho(GLsizei largura, GLsizei altura) {
 /* ILUMINACAO DA CENA */
 void iluminarCenario() {
     GLfloat luzAmbiente[4] = {0.3, 0.3, 0.3, 1.0};
-    GLfloat luzDifusa[4] = {0.5, 0.5, 0.5, 1.0};
-    GLfloat luzEspecular[4] = {0.5, 0.5, 0.5, 1.0};
-    GLfloat posicaoLuz[4] = {0.0, 75.0, 100.0f, 1.0};
+    GLfloat luzDifusa[4] = {0.7, 0.7, 0.7, 1.0};
+    GLfloat luzEspecular[4] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat posicaoLuz[4] = {-50.0f, 50.0, 50.0, 1.0};
     GLfloat objetoAmbiente[4] = {0.5, 0.0, 0.0, 1.0};
     GLfloat objetoDifusa[4] = {1.0,0.0,0.0,1.0};
     GLfloat especularidade[4] = {0.5, 0.5, 0.5, 1.0};
-    GLint especMaterial = 20;
+    GLint especMaterial = 30;
 
     glClearColor(0.74902, 0.847059, 0.847059, 0.0);
 
@@ -236,6 +237,10 @@ void bracoDireito() {
         glPushMatrix();
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(0.035f, -0.11f, 0.0f);
+            glTranslatef(0.0f, 0.04f, 0.0f);
+            glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
+            // printf("ODir: %lf ", anguloOmbroD);
+            glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
                 for (i = 0; i <= 20; i++) {
@@ -263,40 +268,44 @@ void bracoDireito() {
             glPushMatrix();
                 glutSolidSphere(0.009f, 50, 50);
             glPopMatrix();
-        glPopMatrix();
 
-        // antebraco direito
-        glPushMatrix();
-            glColor3f(0.72f, 0.0f, 0.0f);
-            glTranslatef(0.035f, -0.15f, 0.0f);
-
-            glBegin(GL_QUAD_STRIP);
-                for (i = 0; i <= 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0);
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            // mao direita
+            // antebraco direito
             glPushMatrix();
-                glTranslatef(0.0f, -0.011f, 0.0f);
-                glScalef(0.3f, 1.1f, 0.8f);
-                glutSolidCube(0.021f);
+                glColor3f(0.72f, 0.0f, 0.0f);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+                glTranslatef(0.0f, 0.04f, 0.0f);
+                glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
+                // printf("CotDir: %lf ", -anguloCotoveloD);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+
+                glBegin(GL_QUAD_STRIP);
+                    for (i = 0; i <= 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0);
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                // mao direita
+                glPushMatrix();
+                    glTranslatef(0.0f, -0.011f, 0.0f);
+                    glScalef(0.3f, 1.1f, 0.8f);
+                    glutSolidCube(0.021f);
+                glPopMatrix();
             glPopMatrix();
         glPopMatrix();
     glPopMatrix();
@@ -310,6 +319,10 @@ void bracoEsquerdo() {
         glPushMatrix();
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(-0.035f, -0.11f, 0.0f);
+            glTranslatef(0.0f, 0.04f, 0.0f);
+            glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            // printf("OEsq: %lf ", anguloOmbroE);
+            glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
                 for (i = 0; i <= 20; i++) {
@@ -337,40 +350,44 @@ void bracoEsquerdo() {
             glPushMatrix();
                 glutSolidSphere(0.009f, 50, 50);
             glPopMatrix();
-        glPopMatrix();
 
-        // antebraco direito
-        glPushMatrix();
-            glColor3f(0.72f, 0.0f, 0.0f);
-            glTranslatef(-0.035f, -0.15f, 0.0f);
-
-            glBegin(GL_QUAD_STRIP);
-                for (i = 0; i <= 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0);
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            // mao direita
+            // antebraco esquerdo
             glPushMatrix();
-                glTranslatef(0.0f, -0.011f, 0.0f);
-                glScalef(0.3f, 1.1f, 0.8f);
-                glutSolidCube(0.021f);
+                glColor3f(0.72f, 0.0f, 0.0f);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+                glTranslatef(0.0f, 0.04f, 0.0f);
+                glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
+                // printf("CotEsq: %lf \n", -anguloCotoveloE);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+
+                glBegin(GL_QUAD_STRIP);
+                    for (i = 0; i <= 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0);
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                // mao esquerda
+                glPushMatrix();
+                    glTranslatef(0.0f, -0.011f, 0.0f);
+                    glScalef(0.3f, 1.1f, 0.8f);
+                    glutSolidCube(0.021f);
+                glPopMatrix();
             glPopMatrix();
         glPopMatrix();
     glPopMatrix();
@@ -384,6 +401,10 @@ void pernaDireita() {
         glPushMatrix();
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(0.012f, -0.21f, 0.0f);
+            glTranslatef(0.0f, 0.04f, 0.0f);
+            glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
+            // printf("CoxaDir: %lf ", -anguloCoxaD);
+            glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
                 for (i = 0; i <= 20; i++) {
@@ -411,40 +432,44 @@ void pernaDireita() {
             glPushMatrix();
                 glutSolidSphere(0.01f, 50, 50);
             glPopMatrix();
-        glPopMatrix();
 
-        // canela direita
-        glPushMatrix();
-            glColor3f(0.15f, 0.17f, 0.19f);
-            glTranslatef(0.012f, -0.25f, 0.0f);
-
-            glBegin(GL_QUAD_STRIP);
-            for (i = 0; i <= 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0f);
-                glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-            }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0f);
-                glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-            }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0);
-                glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-            }
-            glEnd();
-
-            // pe direito
+            // canela direita
             glPushMatrix();
-                glTranslatef(0.0f, -0.001f, 0.007f);
-                glScalef(1.0f, 1.0f, 1.7f);
-                glutSolidCube(0.02f);
+                glColor3f(0.15f, 0.17f, 0.19f);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+                glTranslatef(0.0f, 0.04f, 0.0f);
+                glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
+                // printf("CanDir: %lf ", anguloCanelaD);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+
+                glBegin(GL_QUAD_STRIP);
+                for (i = 0; i <= 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                }
+                glEnd();
+
+                // pe direito
+                glPushMatrix();
+                    glTranslatef(0.0f, -0.001f, 0.007f);
+                    glScalef(1.0f, 1.0f, 1.7f);
+                    glutSolidCube(0.02f);
+                glPopMatrix();
             glPopMatrix();
         glPopMatrix();
     glPopMatrix();
@@ -458,6 +483,10 @@ void pernaEsquerda() {
         glPushMatrix();
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(-0.012f, -0.21f, 0.0f);
+            glTranslatef(0.0f, 0.04f, 0.0f);
+            glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
+            // printf("CoxaEsq: %lf ", anguloCoxaE);
+            glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
                 for (i = 0; i <= 20; i++) {
@@ -485,40 +514,44 @@ void pernaEsquerda() {
             glPushMatrix();
                 glutSolidSphere(0.01f, 50, 50);
             glPopMatrix();
-        glPopMatrix();
 
-        // canela esquerda
-        glPushMatrix();
-            glColor3f(0.15f, 0.17f, 0.19f);
-            glTranslatef(-0.012f, -0.25f, 0.0f);
-
-            glBegin(GL_QUAD_STRIP);
-                for (i = 0; i <= 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0);
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
-            glEnd();
-
-            // pe esquerdo
+            // canela esquerda
             glPushMatrix();
-                glTranslatef(0.0f, -0.001f, 0.007f);
-                glScalef(1.0f, 1.0f, 1.7f);
-                glutSolidCube(0.02f);
+                glColor3f(0.15f, 0.17f, 0.19f);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+                glTranslatef(0.0f, 0.04f, 0.0f);
+                glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
+                // printf("CanEsq: %lf\n", anguloCanelaE);
+                glTranslatef(0.0f, -0.04f, 0.0f);
+
+                glBegin(GL_QUAD_STRIP);
+                    for (i = 0; i <= 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0);
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
+                glEnd();
+
+                // pe esquerdo
+                glPushMatrix();
+                    glTranslatef(0.0f, -0.001f, 0.007f);
+                    glScalef(1.0f, 1.0f, 1.7f);
+                    glutSolidCube(0.02f);
+                glPopMatrix();
             glPopMatrix();
         glPopMatrix();
     glPopMatrix();
@@ -540,52 +573,92 @@ void desenharPersonagem() {
 }
 
 /* DESENHO DO CENARIO */
-void troncoArvore() {
+void folhaArvore() {
+    glPushMatrix();
+        glColor3f(0.04f, 0.31f, 0.0f);
+        glTranslatef(0.0f, 0.15f, 0.25f);
+        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glTranslatef(0.0f, 0.25f, 0.0f);
+        glutSolidCone(0.15, 0.3, 50, 50);
+    glPopMatrix();
+
+    glPushMatrix();
+        glColor3f(0.04f, 0.31f, 0.0f);
+        glTranslatef(0.0f, 0.30f, 0.25f);
+        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glTranslatef(0.0f, 0.25f, 0.0f);
+        glutSolidCone(0.12, 0.25, 50, 50);
+    glPopMatrix();
+
+    glPushMatrix();
+        glColor3f(0.04f, 0.31f, 0.0f);
+        glTranslatef(0.0f, 0.45f, 0.25f);
+        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glTranslatef(0.0f, 0.25f, 0.0f);
+        glutSolidCone(0.09, 0.2, 50, 50);
+    glPopMatrix();
+}
+
+void troncoArvore(float posicaoX, float posicaoY, float posicaoZ) {
     int i; float anguloTronco;
 
     glPushMatrix();
-        glTranslatef(0.0f, -0.25f, -0.25f);
+        glTranslatef(posicaoX, posicaoY, posicaoZ);
         glColor3f(0.26f, 0.0f, 0.0f);
 
         // tronco
         glBegin(GL_QUAD_STRIP);
         for (i = 0; i <= 20; i++) {
             anguloTronco = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.02f * cosf(anguloTronco), 0.0f, 0.02f * sinf(anguloTronco));
-            glVertex3f(0.02f * cosf(anguloTronco), 0.1f, 0.02f * sinf(anguloTronco));
+            glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
+            glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
         }
         glEnd();
 
         glBegin(GL_POLYGON);
         for (i = 0; i < 20; i++) {
             anguloTronco = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.02f * cosf(anguloTronco), 0.0f, 0.02f * sinf(anguloTronco));
+            glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
         }
         glEnd();
 
         glBegin(GL_POLYGON);
         for (i = 0; i < 20; i++) {
             anguloTronco = (float) (2 * M_PI * i / 20.0);
-            glVertex3f(0.02f * cosf(anguloTronco), 0.1f, 0.02f * sinf(anguloTronco));
+            glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
         }
         glEnd();
+
+        folhaArvore();
     glPopMatrix();
 }
 
 /* DESENHO DO CENARIO */
 void desenharCenario() {
+    // posicoes da primeira arvore (canto superior esquerdo da grama), servirao de base para desenhar as outras
+    float posicaoX = -2.25f;
+    float posicaoY = -0.3f;
+    float posicaoZ = -1.25f;
+
     // grama
     glPushMatrix();
         glColor3f(0.01f, 0.45f, 0.02f);
         glTranslatef(0.0f, -0.3f, -0.25f);
-        glScalef(100.0f, 0.5f, 100.0f);
+        glScalef(100.0f, 0.5f, 50.0f);
         glutSolidCube(0.05f);
     glPopMatrix();
 
-    // tronco da arvore
-    // troncoArvore();
+    // arvores do fundo
+    for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, posicaoZ);
 
-    // TODO desenhar folhas da árvore
+    // arvores da frente
+    for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, (posicaoZ + 2.0));
+
+    // arvores da esquerda
+    for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore(posicaoX, posicaoY, (posicaoZ + i));
+
+    // arvores da direita
+    for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore((posicaoX + 4.5), posicaoY, (posicaoZ + i));
 }
 
 /* DESENHAR CENA COMPLETA */
@@ -671,6 +744,45 @@ void leituraTeclado(unsigned char tecla, int x, int y) {
     glutPostRedisplay();
 }
 
+/* CAMINHADA DO CAPITAO AMERICA */
+void caminhadaPersonagem() {
+    // ombro esquerdo
+    if (anguloOmbroE == 45 || anguloOmbroE == -45) auxOmbroE = -auxOmbroE;
+    anguloOmbroE -= auxOmbroE;
+
+    // cotovelo esquerdo
+    if (anguloCotoveloE >= 90 || anguloCotoveloE < 0) auxCotoveloE = -auxCotoveloE;
+    anguloCotoveloE += auxCotoveloE;
+
+    // ombro direito
+    if (anguloOmbroD == 45 || anguloOmbroD == -45) auxOmbroD = -auxOmbroD;
+    anguloOmbroD += auxOmbroD;
+
+    // cotovelo direito
+    if (anguloCotoveloD >= 90 || anguloCotoveloD < 0) auxCotoveloD = -auxCotoveloD;
+    anguloCotoveloD += auxCotoveloD;
+
+    // coxa esquerda
+    if (anguloCoxaE == 45 || anguloCoxaE == -45) auxCoxaE = -auxCoxaE;
+    anguloCoxaE += auxCoxaE;
+
+    // canela esquerda
+    if (anguloCanelaE < 0 || anguloCanelaE == 50) auxCanelaE = -auxCanelaE;
+    anguloCanelaE -= auxCanelaE;
+
+    // coxa direita
+    if (anguloCoxaD == 45 || anguloCoxaD == -45) auxCoxaD = -auxCoxaD;
+    anguloCoxaD += auxCoxaD;
+
+    // canela direita
+    if (anguloCanelaD < 0 || anguloCanelaD == 50) auxCanelaD = -auxCanelaD;
+    anguloCanelaD -= auxCanelaD;
+
+    ProjecaoCena();
+    glutPostRedisplay();
+    glutTimerFunc(10, caminhadaPersonagem, 1);
+}
+
 /* MOVIMENTACAO DO PERSONAGEM */
 void leituraSetas(int tecla, int x, int y) {
     switch (tecla) {
@@ -712,6 +824,7 @@ int main(int argc, char *argv[]) {
     glutSpecialFunc(leituraSetas);
 
     glutDisplayFunc(desenharCenaCompleta);
+    glutTimerFunc(10, caminhadaPersonagem, 0);
     iluminarCenario();
     glutMainLoop();
     return 0;
