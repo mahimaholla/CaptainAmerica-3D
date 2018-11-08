@@ -11,12 +11,12 @@ int alturaJanela = 700, larguraJanela = 700;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
-float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f;
-float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
-float posicaoPersonagemX = 0.0f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f;
-float anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f, anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f;
-float anguloOmbroE = 0.0f, anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f, auxCotoveloE = 1.0f, auxCotoveloD = 1.0f;
-float escudoX, escudoY = -0.3f, escudoZ;
+float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCenaX = 0.0f, anguloCenaY = 0.0f,
+anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = 0.0f,
+posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
+anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f, anguloOmbroE = 0.0f,
+anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f,
+auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -266,7 +266,7 @@ void tronco() {
                     }
                 glEnd();
 
-                // bumbum do Chris Evans
+                // bumbum
                 glPushMatrix();
                     glTranslatef(0.0f, 0.027f, -0.01f);
                     glScalef(1.1f, 3.0f, 1.2f);
@@ -287,7 +287,6 @@ void bracoDireito() {
             glTranslatef(0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
-            // printf("ODir: %lf ", anguloOmbroD);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -323,7 +322,6 @@ void bracoDireito() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
-                // printf("CotDir: %lf ", -anguloCotoveloD);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -369,7 +367,6 @@ void bracoEsquerdo() {
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
-            // printf("OEsq: %lf ", anguloOmbroE);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -405,7 +402,6 @@ void bracoEsquerdo() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
-                // printf("CotEsq: %lf \n", -anguloCotoveloE);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -451,7 +447,6 @@ void pernaDireita() {
             glTranslatef(0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
-            // printf("CoxaDir: %lf ", -anguloCoxaD);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -463,17 +458,17 @@ void pernaDireita() {
             glEnd();
 
             glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0f);
-                glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-            }
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                }
             glEnd();
 
             glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0);
-                glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-            }
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                }
             glEnd();
 
             // joelho direito
@@ -487,29 +482,28 @@ void pernaDireita() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
-                // printf("CanDir: %lf ", anguloCanelaD);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
-                for (i = 0; i <= 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
+                    for (i = 0; i <= 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
                 glEnd();
 
                 glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0f);
-                    glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
-                }
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0f);
+                        glVertex3f(0.01f * cosf(angulo), 0.0f, 0.01f * sinf(angulo));
+                    }
                 glEnd();
 
                 glBegin(GL_POLYGON);
-                for (i = 0; i < 20; i++) {
-                    angulo = (float) (2 * M_PI * i / 20.0);
-                    glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
-                }
+                    for (i = 0; i < 20; i++) {
+                        angulo = (float) (2 * M_PI * i / 20.0);
+                        glVertex3f(0.01f * cosf(angulo), 0.04f, 0.01f * sinf(angulo));
+                    }
                 glEnd();
 
                 // pe direito
@@ -533,7 +527,6 @@ void pernaEsquerda() {
             glTranslatef(-0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
-            // printf("CoxaEsq: %lf ", anguloCoxaE);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -569,7 +562,6 @@ void pernaEsquerda() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
-                // printf("CanEsq: %lf\n", anguloCanelaE);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -626,10 +618,10 @@ void desenharEscudo(float posX, float posY, float posZ) {
     // TODO aplicar textura no escudo
 
     glPushMatrix();
-    glColor3f(0.0f, 0.02f, 0.31f);
-    glTranslatef(posX, posY, posZ);
-    glRotatef(90.0, 1.0, 0.0, 0.0);
-    glutSolidTorus(0.02, 0.03, 50, 50);
+        glColor3f(0.0f, 0.02f, 0.31f);
+        glTranslatef(posX, posY, posZ);
+        glRotatef(90.0, 1.0, 0.0, 0.0);
+        glutSolidTorus(0.02, 0.03, 50, 50);
     glPopMatrix();
 }
 
@@ -669,25 +661,25 @@ void troncoArvore(float posicaoX, float posicaoY, float posicaoZ) {
 
         // tronco
         glBegin(GL_QUAD_STRIP);
-        for (i = 0; i <= 20; i++) {
-            anguloTronco = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
-            glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
-        }
+            for (i = 0; i <= 20; i++) {
+                anguloTronco = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
+                glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
+            }
         glEnd();
 
         glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            anguloTronco = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
-        }
+            for (i = 0; i < 20; i++) {
+                anguloTronco = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.04f * cosf(anguloTronco), 0.0f, 0.04f * sinf(anguloTronco));
+            }
         glEnd();
 
         glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            anguloTronco = (float) (2 * M_PI * i / 20.0);
-            glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
-        }
+            for (i = 0; i < 20; i++) {
+                anguloTronco = (float) (2 * M_PI * i / 20.0);
+                glVertex3f(0.04f * cosf(anguloTronco), 0.2f, 0.04f * sinf(anguloTronco));
+            }
         glEnd();
 
         folhaArvore();
@@ -715,13 +707,13 @@ void desenharCenario() {
     for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, posicaoZ);
 
     // arvores da frente
-    for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, (posicaoZ + 2.0));
+    for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, (posicaoZ + 2.0f));
 
     // arvores da esquerda
     for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore(posicaoX, posicaoY, (posicaoZ + i));
 
     // arvores da direita
-    for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore((posicaoX + 4.5), posicaoY, (posicaoZ + i));
+    for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore((posicaoX + 4.5f), posicaoY, (posicaoZ + i));
 
     // desenhar escudos, se houver
     if (primeiroEscudo != NULL)
