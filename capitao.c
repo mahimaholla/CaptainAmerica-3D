@@ -7,7 +7,7 @@
 #include <math.h>
 
 /* VARIAVEIS GLOBAIS */
-int alturaJanela = 700, larguraJanela = 700;
+int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
@@ -16,7 +16,8 @@ anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 
 posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
 anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f, anguloOmbroE = 0.0f,
 anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f,
-auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ;
+auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ, inicialCanelaD = 0.0f,
+inicialCotoveloE = 0.0f;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -119,6 +120,20 @@ void removerEscudo(void) {
         free(auxFila);
     }
 }
+
+/* MAQUINA DE ESTADOS PARA O PERSONAGEM */
+enum maqPersonagem {
+    Pronto,   // no meio do cenario, aguardando um escudo aparecer
+    IndoBuscar,   // caminhando em direcao ao escudo
+    Manobrando,   // escudo surgiu atras, personagem manobra
+    PegandoEscudo,   // na frente do escudo, agachando para pegar do chao
+    LevantandoEscudo,   // escudo na mao, levantando com ele
+    GuardandoEscudo,   // em pe, colocando nas costas
+    MeiaVolta,   // escudo nas costas, virando para ir embora
+    IndoCasa,   // virado para casa, indo para la
+    EmCasa,   // deixando o escudo em casa
+    SaindoCasa   // saindo de casa sem o escudo, indo para posicao inicial
+} estadoPersonagem;
 
 /* DESENHO DO CAPITAO AMERICA */
 void cabeca() {
@@ -401,7 +416,8 @@ void bracoEsquerdo() {
                 glColor3f(0.72f, 0.0f, 0.0f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
+                if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
+                else glRotatef(-inicialCotoveloE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -481,7 +497,8 @@ void pernaDireita() {
                 glColor3f(0.15f, 0.17f, 0.19f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
+                if (flagCaminhada) glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
+                else glRotatef(inicialCanelaD, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -806,37 +823,40 @@ void leituraTeclado(unsigned char tecla, int x, int y) {
 
 /* CAMINHADA DO CAPITAO AMERICA */
 void caminhadaPersonagem() {
-    // ombro esquerdo
-    if (anguloOmbroE == 45 || anguloOmbroE == -45) auxOmbroE = -auxOmbroE;
-    anguloOmbroE -= auxOmbroE;
 
-    // cotovelo esquerdo
-    if (anguloCotoveloE >= 90 || anguloCotoveloE < 0) auxCotoveloE = -auxCotoveloE;
-    anguloCotoveloE += auxCotoveloE;
+    if (flagCaminhada) {
+        // ombro esquerdo
+        if (anguloOmbroE == 45 || anguloOmbroE == -45) auxOmbroE = -auxOmbroE;
+        anguloOmbroE -= auxOmbroE;
 
-    // ombro direito
-    if (anguloOmbroD == 45 || anguloOmbroD == -45) auxOmbroD = -auxOmbroD;
-    anguloOmbroD += auxOmbroD;
+        // cotovelo esquerdo
+        if (anguloCotoveloE >= 90 || anguloCotoveloE < 0) auxCotoveloE = -auxCotoveloE;
+        anguloCotoveloE += auxCotoveloE;
 
-    // cotovelo direito
-    if (anguloCotoveloD >= 90 || anguloCotoveloD < 0) auxCotoveloD = -auxCotoveloD;
-    anguloCotoveloD += auxCotoveloD;
+        // ombro direito
+        if (anguloOmbroD == 45 || anguloOmbroD == -45) auxOmbroD = -auxOmbroD;
+        anguloOmbroD += auxOmbroD;
 
-    // coxa esquerda
-    if (anguloCoxaE == 45 || anguloCoxaE == -45) auxCoxaE = -auxCoxaE;
-    anguloCoxaE += auxCoxaE;
+        // cotovelo direito
+        if (anguloCotoveloD >= 90 || anguloCotoveloD < 0) auxCotoveloD = -auxCotoveloD;
+        anguloCotoveloD += auxCotoveloD;
 
-    // canela esquerda
-    if (anguloCanelaE < 0 || anguloCanelaE == 50) auxCanelaE = -auxCanelaE;
-    anguloCanelaE -= auxCanelaE;
+        // coxa esquerda
+        if (anguloCoxaE == 45 || anguloCoxaE == -45) auxCoxaE = -auxCoxaE;
+        anguloCoxaE += auxCoxaE;
 
-    // coxa direita
-    if (anguloCoxaD == 45 || anguloCoxaD == -45) auxCoxaD = -auxCoxaD;
-    anguloCoxaD += auxCoxaD;
+        // canela esquerda
+        if (anguloCanelaE < 0 || anguloCanelaE == 50) auxCanelaE = -auxCanelaE;
+        anguloCanelaE -= auxCanelaE;
 
-    // canela direita
-    if (anguloCanelaD < 0 || anguloCanelaD == 50) auxCanelaD = -auxCanelaD;
-    anguloCanelaD -= auxCanelaD;
+        // coxa direita
+        if (anguloCoxaD == 45 || anguloCoxaD == -45) auxCoxaD = -auxCoxaD;
+        anguloCoxaD += auxCoxaD;
+
+        // canela direita
+        if (anguloCanelaD < 0 || anguloCanelaD == 50) auxCanelaD = -auxCanelaD;
+        anguloCanelaD -= auxCanelaD;
+    }
 
     ProjecaoCena();
     glutPostRedisplay();
@@ -880,6 +900,7 @@ void criarEscudo(int botao, int estado) {
 
         // criar escudo (adicionar na fila)
         inserirEscudo(escudoX, escudoY, escudoZ);
+        flagCaminhada = 1;
     }
 
     ProjecaoCena();
