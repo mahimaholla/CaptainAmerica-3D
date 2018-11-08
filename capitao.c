@@ -16,6 +16,7 @@ float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
 float posicaoPersonagemX = 0.0f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f;
 float anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f, anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f;
 float anguloOmbroE = 0.0f, anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f, auxCotoveloE = 1.0f, auxCotoveloD = 1.0f;
+float escudoX, escudoY = -0.3f, escudoZ;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -74,12 +75,57 @@ void iluminarCenario() {
 }
 
 // TODO aplicação de textura
-// TODO fila de escudos
-// TODO desenho do escudo
+
+/* ESTRUTURA DA FILA DE ESCUDOS */
+typedef struct escudo {
+    float posicaoEscudoX;
+    float posicaoEscudoY;
+    float posicaoEscudoZ;
+    struct escudo *proximoEscudo;
+} filaEscudos;
+filaEscudos *primeiroEscudo = NULL;
+
+/* INSERCAO DOS ESCUDOS NO FINAL DA FILA */
+void inserirEscudo(float posicaoX, float posicaoY, float posicaoZ) {
+    // primeiro escudo da fila
+    if (primeiroEscudo == NULL) {
+        filaEscudos *novoEscudo = (filaEscudos*)malloc(sizeof(filaEscudos));
+        novoEscudo->posicaoEscudoX = posicaoX;
+        novoEscudo->posicaoEscudoY = posicaoY;
+        novoEscudo->posicaoEscudoZ = posicaoZ;
+        novoEscudo->proximoEscudo = primeiroEscudo;
+        primeiroEscudo = novoEscudo;
+        return;
+    }
+
+    // outras toras da fila, entrando no final
+    filaEscudos *auxFila = primeiroEscudo, *novoEscudo;
+
+    while (auxFila->proximoEscudo != NULL) auxFila = auxFila->proximoEscudo;
+
+    novoEscudo = (filaEscudos*)malloc(sizeof(filaEscudos));
+    novoEscudo->posicaoEscudoX = posicaoX;
+    novoEscudo->posicaoEscudoY = posicaoY;
+    novoEscudo->posicaoEscudoZ = posicaoZ;
+    novoEscudo->proximoEscudo = NULL;
+    auxFila->proximoEscudo = novoEscudo;
+}
+
+/* REMOCAO DO ESCUDO NO INICIO DA FILA */
+void removerEscudo(void) {
+    if (primeiroEscudo != NULL) {
+        filaEscudos *auxFila = primeiroEscudo;
+        primeiroEscudo = auxFila->proximoEscudo;
+        free(auxFila);
+    }
+}
 
 /* DESENHO DO CAPITAO AMERICA */
 void cabeca() {
     int i; float angulo;
+
+    // TODO desenhar cabelo e barba com splines
+    // TODO aplicar textura para o rosto
 
     // cabeca
     glPushMatrix();
@@ -119,6 +165,8 @@ void cabeca() {
 
 void tronco() {
     int i; float angulo;
+
+    // TODO aplicar textura no corpo
 
     glPushMatrix();
         glColor3f(0.0f, 0.24f, 0.41f);
@@ -572,6 +620,19 @@ void desenharPersonagem() {
     glPopMatrix();
 }
 
+/* DESENHO DO ESCUDO */
+void desenharEscudo(float posX, float posY, float posZ) {
+    // TODO desenhar escudo com splines
+    // TODO aplicar textura no escudo
+
+    glPushMatrix();
+    glColor3f(0.0f, 0.02f, 0.31f);
+    glTranslatef(posX, posY, posZ);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    glutSolidTorus(0.02, 0.03, 50, 50);
+    glPopMatrix();
+}
+
 /* DESENHO DO CENARIO */
 void folhaArvore() {
     glPushMatrix();
@@ -633,12 +694,14 @@ void troncoArvore(float posicaoX, float posicaoY, float posicaoZ) {
     glPopMatrix();
 }
 
-/* DESENHO DO CENARIO */
 void desenharCenario() {
     // posicoes da primeira arvore (canto superior esquerdo da grama), servirao de base para desenhar as outras
     float posicaoX = -2.25f;
     float posicaoY = -0.3f;
     float posicaoZ = -1.25f;
+
+    // auxiliar para desenhar escudos
+    filaEscudos *auxEscudo;
 
     // grama
     glPushMatrix();
@@ -659,6 +722,11 @@ void desenharCenario() {
 
     // arvores da direita
     for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore((posicaoX + 4.5), posicaoY, (posicaoZ + i));
+
+    // desenhar escudos, se houver
+    if (primeiroEscudo != NULL)
+        for (auxEscudo = primeiroEscudo; auxEscudo != NULL; auxEscudo = auxEscudo->proximoEscudo)
+            desenharEscudo(auxEscudo->posicaoEscudoX, (auxEscudo->posicaoEscudoY + 0.03f), auxEscudo->posicaoEscudoZ);
 }
 
 /* DESENHAR CENA COMPLETA */
@@ -784,7 +852,7 @@ void caminhadaPersonagem() {
 }
 
 /* MOVIMENTACAO DO PERSONAGEM */
-void leituraSetas(int tecla, int x, int y) {
+void leituraSetas(int tecla) {
     switch (tecla) {
         case GLUT_KEY_RIGHT:
             posicaoPersonagemX += 0.005;
@@ -811,6 +879,21 @@ void leituraSetas(int tecla, int x, int y) {
     glutPostRedisplay();
 }
 
+/* CRIACAO DOS ESCUDOS */
+void criarEscudo(int botao, int estado) {
+    if ((botao == GLUT_LEFT_BUTTON) && (estado == GLUT_DOWN)) {
+        // gerar posicao aleatoria para o escudo
+        escudoX = ((rand() * 4.5f)/(RAND_MAX)) - 2.25f;
+        escudoZ = ((rand() * 2.0f)/(RAND_MAX)) - 1.0f;
+
+        // criar escudo (adicionar na fila)
+        inserirEscudo(escudoX, escudoY, escudoZ);
+    }
+
+    ProjecaoCena();
+    glutPostRedisplay();
+}
+
 /* FUNCAO PRINCIPAL */
 int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
@@ -822,6 +905,7 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(redimensionarDesenho);
     glutKeyboardFunc(leituraTeclado);
     glutSpecialFunc(leituraSetas);
+    glutMouseFunc(criarEscudo);
 
     glutDisplayFunc(desenharCenaCompleta);
     glutTimerFunc(10, caminhadaPersonagem, 0);
