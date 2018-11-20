@@ -135,6 +135,10 @@ enum maqPersonagem {
     SaindoCasa   // saindo de casa sem o escudo, indo para posicao inicial
 } estadoPersonagem;
 
+// TODO implementacao da maquina de estados para o movimento do personagem
+// TODO declarar maquina de estados para o escudo
+// TODO implementar maquina de estados para os movimentos do escudo
+
 /* DESENHO DO CAPITAO AMERICA */
 void cabeca() {
     int i; float angulo;
@@ -618,7 +622,7 @@ void desenharPersonagem() {
     glPushMatrix();
         glTranslatef(posicaoPersonagemX, 0.0f, 0.0f);
         glTranslatef(0.0f, posicaoPersonagemY, 0.0f);
-        glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
+        glTranslatef(0.0f, 0.0f, posicaoPersonagemZ - 0.1f);
 
         cabeca();
         tronco();
@@ -643,11 +647,184 @@ void desenharEscudo(float posX, float posY, float posZ) {
 }
 
 /* DESENHO DO CENARIO */
+void chaoCabana() {
+    // chao da cabana
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.50f, -0.28f, -0.2f);
+        glScalef(10.0f, 0.5f, 20.0f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+
+    // chao da varanda
+    glPushMatrix();
+        glColor3f(0.21, 0.2, 0.2);
+        glTranslatef(-1.12f, -0.28f, -0.18f);
+        glScalef(5.0f, 0.5f, 20.0f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+}
+
+void paredesCabana() {
+    // parede do fundo
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.75f, -0.05f, -0.2f);
+        glScalef(0.5f, 10.0f, 20.0f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+
+    // parede da esquerda
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.5f, -0.05f, 0.3f);
+        glScalef(10.0f, 10.0f, 0.5f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+
+    // parede da direita
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.39f, -0.05f, -0.7f);
+        glScalef(15.0f, 10.0f, 0.5f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+
+    // parede da frente, lado esquerdo
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.25f, -0.05f, 0.14f);
+        glScalef(0.5f, 10.0f, 7.0f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+
+    // base da parede da frente, lado direito
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.25f, -0.05f, -0.48f);
+        glScalef(0.5f, 10.0f, 9.0f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+}
+
+void janelaCabana() {
+    // parede da janela
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.0f, -0.05f, -0.52f);
+
+        // esquerda
+        glPushMatrix();
+            glTranslatef(0.0f, 0.0f, 0.16f);
+            glScalef(0.5f, 10.0f, 1.2f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // direita
+        glPushMatrix();
+            glTranslatef(0.0f, 0.0f, -0.16f);
+            glScalef(0.5f, 10.0f, 1.2f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // abaixo
+        glPushMatrix();
+            glTranslatef(0.0f, -0.16f, 0.0f);
+            glScalef(0.5f, 3.5f, 7.5f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // acima
+        glPushMatrix();
+            glTranslatef(0.0f, 0.19f, 0.0f);
+            glScalef(0.5f, 2.5f, 7.5f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // vidro da janela
+        glPushMatrix();
+            glColor3f(0.02, 0.29, 0.49);
+            glTranslatef(0.0f, 0.03f, 0.0f);
+            glScalef(0.5f, 4.0f, 5.0f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // parapeito da janela
+        glPushMatrix();
+            glColor3f(0.62, 0.38, 0.03);
+            glTranslatef(0.02f, -0.06f, 0.0f);
+            glScalef(0.5f, 0.8f, 5.0f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+    glPopMatrix();
+
+    // parede entre janela e porta
+    glPushMatrix();
+        glColor3f(0.26f, 0.0f, 0.0f);
+        glTranslatef(-1.13f, -0.05f, -0.34f);
+        glScalef(4.5f, 10.0f, 0.5f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+}
+
+void portaCabana() {
+    // parede acima da porta
+    glPushMatrix();
+        glTranslatef(-1.25f, 0.14f, -0.2f);
+        glScalef(0.5f, 2.5f, 7.5f);
+        glutSolidCube(0.05);
+    glPopMatrix();
+}
+
+void varandaCabana() {
+    // parte frontal
+        // corrimao
+        glPushMatrix();
+            glColor3f(0.49, 0.43, 0.35);
+            glTranslatef(-1.0f, -0.12f, 0.14f);
+            glScalef(0.5f, 0.5f, 7.0f);
+            glutSolidCube(0.05);
+        glPopMatrix();
+
+        // base
+        glPushMatrix();
+        glPopMatrix();
+
+        // colunas
+        glPushMatrix();
+        glPopMatrix();
+
+    // parte lateral
+        // corrimao
+        glPushMatrix();
+        glPopMatrix();
+
+        // base
+        glPushMatrix();
+        glPopMatrix();
+
+        // colunas
+        glPushMatrix();
+        glPopMatrix();
+}
+
+void cabanaCompleta() {
+    glPushMatrix();
+        chaoCabana();
+        paredesCabana();
+        janelaCabana();
+        portaCabana();
+        varandaCabana();
+
+        // TODO porta de madeira
+    glPopMatrix();
+}
+
 void folhaArvore() {
     glPushMatrix();
         glColor3f(0.04f, 0.31f, 0.0f);
         glTranslatef(0.0f, 0.15f, 0.25f);
-        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glRotatef(-90.0f, 1.0, 0.0, 0.0);
         glTranslatef(0.0f, 0.25f, 0.0f);
         glutSolidCone(0.15, 0.3, 50, 50);
     glPopMatrix();
@@ -655,7 +832,7 @@ void folhaArvore() {
     glPushMatrix();
         glColor3f(0.04f, 0.31f, 0.0f);
         glTranslatef(0.0f, 0.30f, 0.25f);
-        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glRotatef(-90.0f, 1.0, 0.0, 0.0);
         glTranslatef(0.0f, 0.25f, 0.0f);
         glutSolidCone(0.12, 0.25, 50, 50);
     glPopMatrix();
@@ -663,7 +840,7 @@ void folhaArvore() {
     glPushMatrix();
         glColor3f(0.04f, 0.31f, 0.0f);
         glTranslatef(0.0f, 0.45f, 0.25f);
-        glRotatef(-90.0, 1.0, 0.0, 0.0);
+        glRotatef(-90.0f, 1.0, 0.0, 0.0);
         glTranslatef(0.0f, 0.25f, 0.0f);
         glutSolidCone(0.09, 0.2, 50, 50);
     glPopMatrix();
@@ -736,6 +913,9 @@ void desenharCenario() {
     if (primeiroEscudo != NULL)
         for (auxEscudo = primeiroEscudo; auxEscudo != NULL; auxEscudo = auxEscudo->proximoEscudo)
             desenharEscudo(auxEscudo->posicaoEscudoX, (auxEscudo->posicaoEscudoY + 0.03f), auxEscudo->posicaoEscudoZ);
+
+    // desenhar cabana
+    cabanaCompleta();
 }
 
 /* DESENHAR CENA COMPLETA */
@@ -756,7 +936,7 @@ void desenharCenaCompleta() {
 }
 
 /* MOVIMENTAR CENA NO TECLADO */
-void leituraTeclado(unsigned char tecla, int x, int y) {
+void leituraTeclado(unsigned char tecla) {
     switch (tecla) {
         case 'x':   // trazer camera para a esquerda
             posicaoCameraX -= 0.01;
@@ -823,7 +1003,6 @@ void leituraTeclado(unsigned char tecla, int x, int y) {
 
 /* CAMINHADA DO CAPITAO AMERICA */
 void caminhadaPersonagem() {
-
     if (flagCaminhada) {
         // ombro esquerdo
         if (anguloOmbroE == 45 || anguloOmbroE == -45) auxOmbroE = -auxOmbroE;
@@ -922,7 +1101,7 @@ int main(int argc, char *argv[]) {
 
     glutDisplayFunc(desenharCenaCompleta);
     glutTimerFunc(10, caminhadaPersonagem, 0);
-    iluminarCenario();
+    // iluminarCenario();
     glutMainLoop();
     return 0;
 }
