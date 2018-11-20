@@ -773,6 +773,21 @@ void portaCabana() {
         glTranslatef(-1.25f, 0.14f, -0.2f);
         glScalef(0.5f, 2.5f, 7.5f);
         glutSolidCube(0.05);
+
+        // porta
+        glPushMatrix();
+            glColor3f(0.82, 0.5, 0.05);
+            glTranslatef(0.0f, -0.09f, 0.01f);
+            glScalef(0.5f, 2.9f, 0.7f);
+            glutSolidCube(0.05);
+
+            // macaneta
+            glPushMatrix();
+                glColor3f(0.31, 0.22, 0.11);
+                glTranslatef(0.04f, 0.0f, -0.015f);
+                glutSolidSphere(0.002, 50, 50);
+            glPopMatrix();
+        glPopMatrix();
     glPopMatrix();
 }
 
@@ -781,31 +796,55 @@ void varandaCabana() {
         // corrimao
         glPushMatrix();
             glColor3f(0.49, 0.43, 0.35);
-            glTranslatef(-1.0f, -0.12f, 0.14f);
+            glTranslatef(-1.01f, -0.12f, 0.14f);
             glScalef(0.5f, 0.5f, 7.0f);
             glutSolidCube(0.05);
         glPopMatrix();
 
         // base
         glPushMatrix();
+            glColor3f(0.49, 0.43, 0.35);
+            glTranslatef(-1.01f, -0.25f, 0.14f);
+            glScalef(0.5f, 0.5f, 7.0f);
+            glutSolidCube(0.05);
         glPopMatrix();
 
         // colunas
-        glPushMatrix();
-        glPopMatrix();
+        for (int i = 0; i < 7; i++) {
+            glPushMatrix();
+                glColor3f(0.49, 0.43, 0.35);
+                glTranslatef(-1.01f, -0.19f, -0.02f + (i / 20.0f));
+                glScalef(1.0f, 15.0f, 1.0f);
+                glutSolidCube(0.01);
+            glPopMatrix();
+        }
 
     // parte lateral
         // corrimao
         glPushMatrix();
+            glColor3f(0.49, 0.43, 0.35);
+            glTranslatef(-1.12f, -0.12f, 0.3f);
+            glScalef(4.5f, 0.5f, 0.5f);
+            glutSolidCube(0.05);
         glPopMatrix();
 
         // base
         glPushMatrix();
+            glColor3f(0.49, 0.43, 0.35);
+            glTranslatef(-1.12f, -0.25f, 0.3f);
+            glScalef(4.5f, 0.5f, 0.5f);
+            glutSolidCube(0.05);
         glPopMatrix();
 
         // colunas
-        glPushMatrix();
-        glPopMatrix();
+        for (int i = 0; i < 5; i++) {
+            glPushMatrix();
+                glColor3f(0.49, 0.43, 0.35);
+                glTranslatef(-1.25f + (i / 20.0f), -0.19f, 0.3f);
+                glScalef(1.0f, 15.0f, 1.0f);
+                glutSolidCube(0.01);
+            glPopMatrix();
+        }
 }
 
 void cabanaCompleta() {
@@ -815,8 +854,6 @@ void cabanaCompleta() {
         janelaCabana();
         portaCabana();
         varandaCabana();
-
-        // TODO porta de madeira
     glPopMatrix();
 }
 
@@ -1101,7 +1138,7 @@ int main(int argc, char *argv[]) {
 
     glutDisplayFunc(desenharCenaCompleta);
     glutTimerFunc(10, caminhadaPersonagem, 0);
-    // iluminarCenario();
+    iluminarCenario();
     glutMainLoop();
     return 0;
 }
