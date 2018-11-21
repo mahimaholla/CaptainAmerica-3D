@@ -1177,8 +1177,8 @@ void leituraSetas(int tecla) {
 void criarEscudo(int botao, int estado) {
     if ((botao == GLUT_LEFT_BUTTON) && (estado == GLUT_DOWN)) {
         // gerar posicao aleatoria para o escudo
-        escudoX = ((rand() * 4.5f)/(RAND_MAX)) - 2.25f;
-        escudoZ = ((rand() * 2.0f)/(RAND_MAX)) - 1.0f;
+        escudoX = ((rand() * 2.2f)/(RAND_MAX)) - 0.6f;
+        escudoZ = ((rand() * 1.3f)/(RAND_MAX)) - 0.9f;
 
         // criar escudo (adicionar na fila)
         inserirEscudo(escudoX, escudoY, escudoZ);
