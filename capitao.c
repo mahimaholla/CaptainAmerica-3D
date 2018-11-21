@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* VARIAVEIS GLOBAIS */
 int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0;
@@ -14,9 +15,9 @@ GLfloat correcaoAspecto, anguloProjecao = 45.0;
 float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCenaX = 0.0f, anguloCenaY = 0.0f,
 anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = -1.06f,
 posicaoPersonagemY = 0.0f, posicaoPersonagemZ = -0.15f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
-anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f, anguloOmbroE = 0.0f,
-anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f,
-auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ,
+anguloCanelaD = 45.0f, auxCoxaE = 2.0f, auxCoxaD = 2.0f, auxCanelaE = 2.0f, auxCanelaD = 2.0f, anguloOmbroE = 0.0f,
+anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 2.0f, auxOmbroD = 2.0f,
+auxCotoveloE = 2.0f, auxCotoveloD = 2.0f, escudoX, escudoY = -0.3f, escudoZ,
 inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
 rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
@@ -136,7 +137,8 @@ filaEscudos filaEscudosCena;
 enum maqPersonagem {
     Pronto,
     IdaX,
-    IdaZ,
+    IdaZEsq,
+    IdaZDir,
     PegandoEscudo
 } estadoPersonagem;
 
@@ -148,12 +150,34 @@ void controlePersonagem(void) {
             break;
 
         case IdaX:
-            if (posicaoPersonagemX <= filaEscudosCena->primeiroEscudo->posicaoEscudoX) posicaoPersonagemX += velPersonagem;
+            if (posicaoPersonagemX <= (filaEscudosCena->primeiroEscudo->posicaoEscudoX - 0.02)) posicaoPersonagemX += velPersonagem;
             else {
-                flagCaminhada = 0;
-                estadoPersonagem = Pronto;
-                filaEscudosCena = removerEscudo(filaEscudosCena);
+                if (posicaoPersonagemZ > (filaEscudosCena->primeiroEscudo->posicaoEscudoZ + 0.1)) estadoPersonagem = IdaZEsq;
+                else if (posicaoPersonagemZ < (filaEscudosCena->primeiroEscudo->posicaoEscudoZ - 0.1)) estadoPersonagem = IdaZDir;
+                else estadoPersonagem = PegandoEscudo;
             }
+            break;
+
+        case IdaZEsq:
+            if (rotacaoPersonagem < 180.0) rotacaoPersonagem += (velPersonagem * 500);
+            else {
+                if (posicaoPersonagemZ > (filaEscudosCena->primeiroEscudo->posicaoEscudoZ + 0.1))
+                    posicaoPersonagemZ -= velPersonagem;
+                else estadoPersonagem = PegandoEscudo;
+            }
+            break;
+
+        case IdaZDir:
+            if (rotacaoPersonagem > 0.0) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                if (posicaoPersonagemZ < (filaEscudosCena->primeiroEscudo->posicaoEscudoZ - 0.1))
+                    posicaoPersonagemZ += velPersonagem;
+                else estadoPersonagem = PegandoEscudo;
+            }
+            break;
+
+        case PegandoEscudo:
+            flagCaminhada = 0;
             break;
     }
 }
@@ -164,8 +188,10 @@ const char* obterEstado(enum maqPersonagem estado) {
             return "Pronto";
         case IdaX:
             return "IdaX";
-        case IdaZ:
-            return "IdaZ";
+        case IdaZEsq:
+            return "IdaZEsq";
+        case IdaZDir:
+            return "IdaZDir";
         case PegandoEscudo:
             return "PegandoEscudo";
     }
@@ -663,6 +689,12 @@ void desenharPersonagem() {
         glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
         glRotatef(rotacaoPersonagem, 0.0, 1.0, 0.0);
 
+        /*if (filaEscudosCena->primeiroEscudo != NULL) {
+            printf("PersX = %lf, PersZ = %lf --- EscX = %lf, EsxZ = %lf\n",
+                   posicaoPersonagemX, posicaoPersonagemZ,
+                   filaEscudosCena->primeiroEscudo->posicaoEscudoX, filaEscudosCena->primeiroEscudo->posicaoEscudoZ);
+        }*/
+
         cabeca();
         tronco();
         bracoDireito();
@@ -1150,7 +1182,7 @@ void leituraTeclado(unsigned char tecla) {
 void caminhadaPersonagem() {
     if (flagCaminhada) {
         // ombro esquerdo
-        if (anguloOmbroE == 45 || anguloOmbroE == -45) auxOmbroE = -auxOmbroE;
+        if (anguloOmbroE >= 45 || anguloOmbroE <= -45) auxOmbroE = -auxOmbroE;
         anguloOmbroE -= auxOmbroE;
 
         // cotovelo esquerdo
@@ -1158,7 +1190,7 @@ void caminhadaPersonagem() {
         anguloCotoveloE += auxCotoveloE;
 
         // ombro direito
-        if (anguloOmbroD == 45 || anguloOmbroD == -45) auxOmbroD = -auxOmbroD;
+        if (anguloOmbroD >= 45 || anguloOmbroD <= -45) auxOmbroD = -auxOmbroD;
         anguloOmbroD += auxOmbroD;
 
         // cotovelo direito
@@ -1166,19 +1198,19 @@ void caminhadaPersonagem() {
         anguloCotoveloD += auxCotoveloD;
 
         // coxa esquerda
-        if (anguloCoxaE == 45 || anguloCoxaE == -45) auxCoxaE = -auxCoxaE;
+        if (anguloCoxaE >= 45 || anguloCoxaE <= -45) auxCoxaE = -auxCoxaE;
         anguloCoxaE += auxCoxaE;
 
         // canela esquerda
-        if (anguloCanelaE < 0 || anguloCanelaE == 50) auxCanelaE = -auxCanelaE;
+        if (anguloCanelaE < 0 || anguloCanelaE >= 50) auxCanelaE = -auxCanelaE;
         anguloCanelaE -= auxCanelaE;
 
         // coxa direita
-        if (anguloCoxaD == 45 || anguloCoxaD == -45) auxCoxaD = -auxCoxaD;
+        if (anguloCoxaD >= 45 || anguloCoxaD <= -45) auxCoxaD = -auxCoxaD;
         anguloCoxaD += auxCoxaD;
 
         // canela direita
-        if (anguloCanelaD < 0 || anguloCanelaD == 50) auxCanelaD = -auxCanelaD;
+        if (anguloCanelaD < 0 || anguloCanelaD >= 50) auxCanelaD = -auxCanelaD;
         anguloCanelaD -= auxCanelaD;
     }
 
@@ -1233,6 +1265,7 @@ void criarEscudo(int botao, int estado) {
 
 /* FUNCAO PRINCIPAL */
 int main(int argc, char *argv[]) {
+    srand(time(NULL));
     filaEscudosCena = iniciarFilaEscudos();
 
     glutInit(&argc, argv);
