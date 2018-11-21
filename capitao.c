@@ -12,12 +12,14 @@ int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0;
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
 float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCenaX = 0.0f, anguloCenaY = 0.0f,
-anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = 0.0f,
-posicaoPersonagemY = 0.0f, posicaoPersonagemZ = 0.0f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
+anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = -1.06f,
+posicaoPersonagemY = 0.0f, posicaoPersonagemZ = -0.15f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
 anguloCanelaD = 45.0f, auxCoxaE = 1.0f, auxCoxaD = 1.0f, auxCanelaE = 1.0f, auxCanelaD = 1.0f, anguloOmbroE = 0.0f,
 anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 1.0f, auxOmbroD = 1.0f,
-auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ, inicialCanelaD = 0.0f,
-inicialCotoveloE = 0.0f;
+auxCotoveloE = 1.0f, auxCotoveloD = 1.0f, escudoX, escudoY = -0.3f, escudoZ,
+inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
+inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
+rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -83,61 +85,91 @@ typedef struct escudo {
     float posicaoEscudoY;
     float posicaoEscudoZ;
     struct escudo *proximoEscudo;
-} filaEscudos;
-filaEscudos *primeiroEscudo = NULL;
+} noEscudo;
+typedef noEscudo *pontEscudo;
+
+typedef struct fila {
+    pontEscudo primeiroEscudo;
+    pontEscudo ultimoEscudo;
+} filaEsc;
+typedef filaEsc *filaEscudos;
+
+/* INICIALIZACAO DA FILA */
+filaEscudos iniciarFilaEscudos() {
+    filaEscudos fila = (filaEscudos) malloc(sizeof(filaEsc));
+    fila->primeiroEscudo = NULL;
+    fila->ultimoEscudo = NULL;
+}
 
 /* INSERCAO DOS ESCUDOS NO FINAL DA FILA */
-void inserirEscudo(float posicaoX, float posicaoY, float posicaoZ) {
-    // primeiro escudo da fila
-    if (primeiroEscudo == NULL) {
-        filaEscudos *novoEscudo = (filaEscudos*)malloc(sizeof(filaEscudos));
-        novoEscudo->posicaoEscudoX = posicaoX;
-        novoEscudo->posicaoEscudoY = posicaoY;
-        novoEscudo->posicaoEscudoZ = posicaoZ;
-        novoEscudo->proximoEscudo = primeiroEscudo;
-        primeiroEscudo = novoEscudo;
-        return;
-    }
+int inserirEscudo(filaEscudos fila, float posicaoX, float posicaoY, float posicaoZ) {
+    pontEscudo novoEscudo;
+    if (fila == NULL) return -1;
 
-    // outras toras da fila, entrando no final
-    filaEscudos *auxFila = primeiroEscudo, *novoEscudo;
-
-    while (auxFila->proximoEscudo != NULL) auxFila = auxFila->proximoEscudo;
-
-    novoEscudo = (filaEscudos*)malloc(sizeof(filaEscudos));
+    novoEscudo = (pontEscudo) malloc(sizeof(noEscudo));
     novoEscudo->posicaoEscudoX = posicaoX;
     novoEscudo->posicaoEscudoY = posicaoY;
     novoEscudo->posicaoEscudoZ = posicaoZ;
     novoEscudo->proximoEscudo = NULL;
-    auxFila->proximoEscudo = novoEscudo;
+
+    if (fila->ultimoEscudo != NULL) fila->ultimoEscudo->proximoEscudo = novoEscudo;
+    else fila->primeiroEscudo = novoEscudo;
+    fila->ultimoEscudo = novoEscudo;
+
+    return 0;
 }
 
 /* REMOCAO DO ESCUDO NO INICIO DA FILA */
-void removerEscudo(void) {
-    if (primeiroEscudo != NULL) {
-        filaEscudos *auxFila = primeiroEscudo;
-        primeiroEscudo = auxFila->proximoEscudo;
-        free(auxFila);
-    }
+filaEscudos removerEscudo(filaEscudos fila) {
+    pontEscudo escudo;
+    if (fila == NULL) return NULL;
+    escudo = fila->primeiroEscudo;
+
+    if (fila->primeiroEscudo == fila->ultimoEscudo) fila->ultimoEscudo = NULL;
+    fila->primeiroEscudo = fila->primeiroEscudo->proximoEscudo;
+    free(escudo);
+    return fila;
 }
+filaEscudos filaEscudosCena;
 
 /* MAQUINA DE ESTADOS PARA O PERSONAGEM */
 enum maqPersonagem {
-    Pronto,   // no meio do cenario, aguardando um escudo aparecer
-    IndoBuscar,   // caminhando em direcao ao escudo
-    Manobrando,   // escudo surgiu atras, personagem manobra
-    PegandoEscudo,   // na frente do escudo, agachando para pegar do chao
-    LevantandoEscudo,   // escudo na mao, levantando com ele
-    GuardandoEscudo,   // em pe, colocando nas costas
-    MeiaVolta,   // escudo nas costas, virando para ir embora
-    IndoCasa,   // virado para casa, indo para la
-    EmCasa,   // deixando o escudo em casa
-    SaindoCasa   // saindo de casa sem o escudo, indo para posicao inicial
+    Pronto,
+    IdaX,
+    IdaZ,
+    PegandoEscudo
 } estadoPersonagem;
 
-// TODO implementacao da maquina de estados para o movimento do personagem
-// TODO declarar maquina de estados para o escudo
-// TODO implementar maquina de estados para os movimentos do escudo
+/* CONTROLE DO PERSONAGEM NA ANIMACAO */
+void controlePersonagem(void) {
+    switch(estadoPersonagem) {
+        case Pronto:
+            if (filaEscudosCena->primeiroEscudo != NULL) estadoPersonagem = IdaX;
+            break;
+
+        case IdaX:
+            if (posicaoPersonagemX <= filaEscudosCena->primeiroEscudo->posicaoEscudoX) posicaoPersonagemX += velPersonagem;
+            else {
+                flagCaminhada = 0;
+                estadoPersonagem = Pronto;
+                filaEscudosCena = removerEscudo(filaEscudosCena);
+            }
+            break;
+    }
+}
+
+const char* obterEstado(enum maqPersonagem estado) {
+    switch (estado) {
+        case Pronto:
+            return "Pronto";
+        case IdaX:
+            return "IdaX";
+        case IdaZ:
+            return "IdaZ";
+        case PegandoEscudo:
+            return "PegandoEscudo";
+    }
+}
 
 /* DESENHO DO CAPITAO AMERICA */
 void cabeca() {
@@ -305,7 +337,8 @@ void bracoDireito() {
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
+            if (flagCaminhada) glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
+            else glRotatef(inicialOmbroD, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -340,7 +373,8 @@ void bracoDireito() {
                 glColor3f(0.72f, 0.0f, 0.0f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
+                if (flagCaminhada) glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
+                else glRotatef(inicialCotoveloD, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -385,7 +419,8 @@ void bracoEsquerdo() {
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            if (flagCaminhada) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            else glRotatef(inicialOmbroE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -466,7 +501,8 @@ void pernaDireita() {
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
+            if (flagCaminhada) glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
+            else glRotatef(-inicialCoxaD, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -547,7 +583,8 @@ void pernaEsquerda() {
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(-0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
+            if (flagCaminhada) glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
+            else glRotatef(inicialCoxaE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
             glBegin(GL_QUAD_STRIP);
@@ -582,7 +619,8 @@ void pernaEsquerda() {
                 glColor3f(0.15f, 0.17f, 0.19f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
+                if (flagCaminhada) glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
+                else glRotatef(inicialCanelaE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
                 glBegin(GL_QUAD_STRIP);
@@ -622,7 +660,8 @@ void desenharPersonagem() {
     glPushMatrix();
         glTranslatef(posicaoPersonagemX, 0.0f, 0.0f);
         glTranslatef(0.0f, posicaoPersonagemY, 0.0f);
-        glTranslatef(0.0f, 0.0f, posicaoPersonagemZ - 0.1f);
+        glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
+        glRotatef(rotacaoPersonagem, 0.0, 1.0, 0.0);
 
         cabeca();
         tronco();
@@ -990,7 +1029,7 @@ void desenharCenario() {
     float posicaoZ = -1.25f;
 
     // auxiliar para desenhar escudos
-    filaEscudos *auxEscudo;
+    pontEscudo auxEscudo;
 
     // grama
     glPushMatrix();
@@ -1013,8 +1052,8 @@ void desenharCenario() {
     for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore((posicaoX + 4.5f), posicaoY, (posicaoZ + i));
 
     // desenhar escudos, se houver
-    if (primeiroEscudo != NULL)
-        for (auxEscudo = primeiroEscudo; auxEscudo != NULL; auxEscudo = auxEscudo->proximoEscudo)
+    if (filaEscudosCena->primeiroEscudo != NULL)
+        for (auxEscudo = filaEscudosCena->primeiroEscudo; auxEscudo != NULL; auxEscudo = auxEscudo->proximoEscudo)
             desenharEscudo(auxEscudo->posicaoEscudoX, (auxEscudo->posicaoEscudoY + 0.03f), auxEscudo->posicaoEscudoZ);
 
     // desenhar cabana
@@ -1033,6 +1072,9 @@ void desenharCenaCompleta() {
         desenharCenario();
         desenharPersonagem();
     glPopMatrix();
+
+    controlePersonagem();
+    printf("%s\n", obterEstado(estadoPersonagem));
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -1181,7 +1223,7 @@ void criarEscudo(int botao, int estado) {
         escudoZ = ((rand() * 1.3f)/(RAND_MAX)) - 0.9f;
 
         // criar escudo (adicionar na fila)
-        inserirEscudo(escudoX, escudoY, escudoZ);
+        inserirEscudo(filaEscudosCena, escudoX, escudoY, escudoZ);
         flagCaminhada = 1;
     }
 
@@ -1191,6 +1233,8 @@ void criarEscudo(int botao, int estado) {
 
 /* FUNCAO PRINCIPAL */
 int main(int argc, char *argv[]) {
+    filaEscudosCena = iniciarFilaEscudos();
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(larguraJanela, alturaJanela);
