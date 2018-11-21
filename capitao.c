@@ -635,14 +635,34 @@ void desenharPersonagem() {
 
 /* DESENHO DO ESCUDO */
 void desenharEscudo(float posX, float posY, float posZ) {
-    // TODO desenhar escudo com splines
+    float angulo; int i;
+
     // TODO aplicar textura no escudo
 
     glPushMatrix();
         glColor3f(0.0f, 0.02f, 0.31f);
         glTranslatef(posX, posY, posZ);
-        glRotatef(90.0, 1.0, 0.0, 0.0);
-        glutSolidTorus(0.02, 0.03, 50, 50);
+        glBegin(GL_QUAD_STRIP);
+            for (i = 0; i <= 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+            }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+            }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0);
+                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+            }
+        glEnd();
     glPopMatrix();
 }
 
@@ -847,6 +867,51 @@ void varandaCabana() {
         }
 }
 
+void telhadoCabana() {
+    glPushMatrix();
+        // lateral esquerda
+        glColor3f (.5, 0.5, .25);
+        glBegin(GL_POLYGON);
+            glVertex3f (-1.0f, 0.3f, 0.2f);
+            glVertex3f (-1.6f, 0.3f, 0.2f);
+            glVertex3f (-1.8f, 0.18f, 0.4f);
+            glVertex3f (-0.8f, 0.18f, 0.4f);
+        glEnd();
+
+        // lateral direita
+        glBegin(GL_POLYGON);
+            glVertex3f (-1.0f, 0.3f, -0.6f);
+            glVertex3f (-1.6f, 0.3f, -0.6f);
+            glVertex3f (-1.8f, 0.18f, -0.8f);
+            glVertex3f (-0.8f, 0.18f, -0.8f);
+        glEnd();
+
+        // fundo
+        glBegin(GL_POLYGON);
+            glVertex3f (-1.6f, 0.3f, 0.2f);
+            glVertex3f (-1.6f, 0.3f, -0.6f);
+            glVertex3f (-1.8f, 0.18f, -0.8f);
+            glVertex3f (-1.8f, 0.18f, 0.4f);
+        glEnd();
+
+        // frente
+        glBegin(GL_POLYGON);
+            glVertex3f (-1.0f, 0.3f, -0.6f);
+            glVertex3f (-1.0f, 0.3f, 0.2f);
+            glVertex3f (-0.8f, 0.18f, 0.4f);
+            glVertex3f (-0.8f, 0.18f, -0.8f);
+        glEnd();
+
+        // topo
+        glBegin(GL_POLYGON);
+            glVertex3f (-1.6f, 0.3f, -0.6f);
+            glVertex3f (-1.6f, 0.3f, 0.2f);
+            glVertex3f (-1.0f, 0.3f, 0.2f);
+            glVertex3f (-1.0f, 0.3f, -0.6f);
+        glEnd();
+    glPopMatrix();
+}
+
 void cabanaCompleta() {
     glPushMatrix();
         chaoCabana();
@@ -854,6 +919,7 @@ void cabanaCompleta() {
         janelaCabana();
         portaCabana();
         varandaCabana();
+        telhadoCabana();
     glPopMatrix();
 }
 
