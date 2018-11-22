@@ -8,7 +8,7 @@
 #include <time.h>
 
 /* VARIAVEIS GLOBAIS */
-int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0;
+int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0, flagImpulso = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
@@ -20,6 +20,7 @@ anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE 
 auxCotoveloE = 2.0f, auxCotoveloD = 2.0f, escudoX, escudoY = -0.3f, escudoZ,
 inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
+impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f,
 rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
 
 /* PROJECAO PERSPECTIVA */
@@ -139,7 +140,16 @@ enum maqPersonagem {
     IdaX,
     IdaZEsq,
     IdaZDir,
-    PegandoEscudo
+    PegandoEscudo,
+    VoltaZEsq,
+    VoltaZDir,
+    VoltaX,
+    TomandoImpulso,
+    JogandoEscudo,
+    RecuperandoEscudo,
+    VoltandoCasa,
+    EmCasa,
+    SaindoCasa
 } estadoPersonagem;
 
 /* CONTROLE DO PERSONAGEM NA ANIMACAO */
@@ -150,10 +160,13 @@ void controlePersonagem(void) {
             break;
 
         case IdaX:
-            if (posicaoPersonagemX <= (filaEscudosCena->primeiroEscudo->posicaoEscudoX - 0.02)) posicaoPersonagemX += velPersonagem;
+            if (posicaoPersonagemX <= (filaEscudosCena->primeiroEscudo->posicaoEscudoX - 0.02))
+                posicaoPersonagemX += velPersonagem;
             else {
-                if (posicaoPersonagemZ > (filaEscudosCena->primeiroEscudo->posicaoEscudoZ + 0.1)) estadoPersonagem = IdaZEsq;
-                else if (posicaoPersonagemZ < (filaEscudosCena->primeiroEscudo->posicaoEscudoZ - 0.1)) estadoPersonagem = IdaZDir;
+                if (posicaoPersonagemZ > (filaEscudosCena->primeiroEscudo->posicaoEscudoZ + 0.1))
+                    estadoPersonagem = IdaZEsq;
+                else if (posicaoPersonagemZ < (filaEscudosCena->primeiroEscudo->posicaoEscudoZ - 0.1))
+                    estadoPersonagem = IdaZDir;
                 else estadoPersonagem = PegandoEscudo;
             }
             break;
@@ -178,6 +191,39 @@ void controlePersonagem(void) {
 
         case PegandoEscudo:
             flagCaminhada = 0;
+            flagImpulso = 1;
+            if (impulsoCotoveloE > -90) impulsoCotoveloE -= 2;
+            else estadoPersonagem = TomandoImpulso;
+            break;
+
+        case VoltaZEsq:
+            break;
+
+        case VoltaZDir:
+            break;
+
+        case VoltaX:
+            break;
+
+        case TomandoImpulso:
+            if (impulsoCotoveloE < 0) impulsoCotoveloE += 2;
+            else if (impulsoOmbroE < 45) impulsoOmbroE += 2;
+            else estadoPersonagem = JogandoEscudo;
+            break;
+
+        case JogandoEscudo:
+            break;
+
+        case RecuperandoEscudo:
+            break;
+
+        case VoltandoCasa:
+            break;
+
+        case EmCasa:
+            break;
+
+        case SaindoCasa:
             break;
     }
 }
@@ -194,6 +240,24 @@ const char* obterEstado(enum maqPersonagem estado) {
             return "IdaZDir";
         case PegandoEscudo:
             return "PegandoEscudo";
+        case VoltaZEsq:
+            return "VoltaZEsq";
+        case VoltaZDir:
+            return "VoltaZDir";
+        case VoltaX:
+            return "VoltaX";
+        case TomandoImpulso:
+            return "TomandoImpulso";
+        case JogandoEscudo:
+            return "JogandoEscudo";
+        case RecuperandoEscudo:
+            return "RecuperandoEscudo";
+        case VoltandoCasa:
+            return "VoltandoCasa";
+        case EmCasa:
+            return "EmCasa";
+        case SaindoCasa:
+            return "SaindoCasa";
     }
 }
 
@@ -446,6 +510,7 @@ void bracoEsquerdo() {
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             if (flagCaminhada) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            else if (flagImpulso) glRotatef(impulsoOmbroE, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -482,6 +547,7 @@ void bracoEsquerdo() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
+                else if (flagImpulso) glRotatef(impulsoCotoveloE, 1.0, 0.0, 0.0);
                 else glRotatef(-inicialCotoveloE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
