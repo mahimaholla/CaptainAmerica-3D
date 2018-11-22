@@ -20,7 +20,7 @@ anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE 
 auxCotoveloE = 2.0f, auxCotoveloD = 2.0f, escudoX, escudoY = -0.3f, escudoZ,
 inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
-impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f,
+impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, anguloPorta = 0.0f,
 rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
 
 /* PROJECAO PERSPECTIVA */
@@ -143,13 +143,16 @@ enum maqPersonagem {
     PegandoEscudo,
     VoltaZEsq,
     VoltaZDir,
+    ManobraEsq,
+    ManobraDir,
     VoltaX,
     TomandoImpulso,
     JogandoEscudo,
     RecuperandoEscudo,
     VoltandoCasa,
     EmCasa,
-    SaindoCasa
+    SaindoCasa,
+    ForaCasa
 } estadoPersonagem;
 
 /* CONTROLE DO PERSONAGEM NA ANIMACAO */
@@ -193,37 +196,103 @@ void controlePersonagem(void) {
             flagCaminhada = 0;
             flagImpulso = 1;
             if (impulsoCotoveloE > -90) impulsoCotoveloE -= 2;
-            else estadoPersonagem = TomandoImpulso;
+            else {
+                if (posicaoPersonagemZ < -0.15) estadoPersonagem = VoltaZEsq;
+                else if (posicaoPersonagemZ > -0.15) estadoPersonagem = VoltaZDir;
+            }
             break;
 
         case VoltaZEsq:
+            flagCaminhada = 1;
+            if (rotacaoPersonagem > 0.0) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                if (posicaoPersonagemZ < -0.15) posicaoPersonagemZ += velPersonagem;
+                else estadoPersonagem = ManobraEsq;
+            }
             break;
 
         case VoltaZDir:
+            flagCaminhada = 1;
+            if (rotacaoPersonagem < 180.0) rotacaoPersonagem += (velPersonagem * 500);
+            else {
+                if (posicaoPersonagemZ > -0.15) posicaoPersonagemZ -= velPersonagem;
+                else estadoPersonagem = ManobraDir;
+            }
+            break;
+
+        case ManobraEsq:
+            if (rotacaoPersonagem > -90.0f) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                rotacaoPersonagem = 270.0f;
+                estadoPersonagem = VoltaX;
+            }
+            break;
+
+        case ManobraDir:
+            if (rotacaoPersonagem < 270.0f) rotacaoPersonagem += (velPersonagem * 500);
+            else estadoPersonagem = VoltaX;
             break;
 
         case VoltaX:
+            if (posicaoPersonagemX > -0.76f) posicaoPersonagemX -= velPersonagem;
+            else if (rotacaoPersonagem > 90.0f) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                flagCaminhada = 0;
+                estadoPersonagem = TomandoImpulso;
+            }
             break;
 
         case TomandoImpulso:
-            if (impulsoCotoveloE < 0) impulsoCotoveloE += 2;
-            else if (impulsoOmbroE < 45) impulsoOmbroE += 2;
+            if (impulsoCotoveloE < 0.0) impulsoCotoveloE += 2;
+            else if (impulsoOmbroE < 45.0) impulsoOmbroE += 2;
             else estadoPersonagem = JogandoEscudo;
             break;
 
         case JogandoEscudo:
+            if (impulsoOmbroE > -90.0) impulsoOmbroE -= 10;
+            else estadoPersonagem = RecuperandoEscudo;
             break;
 
         case RecuperandoEscudo:
+            if (impulsoOmbroE < 0.0) impulsoOmbroE += 10;
+            else if (impulsoCotoveloE > -90.0) impulsoCotoveloE -= 10;
+            else estadoPersonagem = VoltandoCasa;
             break;
 
         case VoltandoCasa:
+            if (anguloPorta < 90.0) anguloPorta += 5;
+            else {
+                flagCaminhada = 1;
+                if (rotacaoPersonagem < 270.0) rotacaoPersonagem += (velPersonagem * 500);
+                else if (posicaoPersonagemX > -1.6) posicaoPersonagemX -= velPersonagem;
+                else {
+                    flagCaminhada = 0;
+                    estadoPersonagem = EmCasa;
+                }
+            }
             break;
 
         case EmCasa:
+            flagImpulso = 0;
+            if (anguloPorta > 0.0) anguloPorta -= 5;
+            else if (rotacaoPersonagem > 90.0) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                estadoPersonagem = SaindoCasa;
+                filaEscudosCena = removerEscudo(filaEscudosCena);
+            }
             break;
 
         case SaindoCasa:
+            flagCaminhada = 1;
+            if (anguloPorta < 90.0) anguloPorta += 5;
+            else if (posicaoPersonagemX < -1.06f) posicaoPersonagemX += velPersonagem;
+            else estadoPersonagem = ForaCasa;
+            break;
+
+        case ForaCasa:
+            flagCaminhada = 0;
+            if (anguloPorta > 0.0) anguloPorta -= 5;
+            else estadoPersonagem = Pronto;
             break;
     }
 }
@@ -244,6 +313,10 @@ const char* obterEstado(enum maqPersonagem estado) {
             return "VoltaZEsq";
         case VoltaZDir:
             return "VoltaZDir";
+        case ManobraEsq:
+            return "ManobraEsq";
+        case ManobraDir:
+            return "ManobraDir";
         case VoltaX:
             return "VoltaX";
         case TomandoImpulso:
@@ -258,6 +331,8 @@ const char* obterEstado(enum maqPersonagem estado) {
             return "EmCasa";
         case SaindoCasa:
             return "SaindoCasa";
+        case ForaCasa:
+            return "ForaCasa";
     }
 }
 
@@ -509,8 +584,8 @@ void bracoEsquerdo() {
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            if (flagCaminhada) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
-            else if (flagImpulso) glRotatef(impulsoOmbroE, 1.0, 0.0, 0.0);
+            if (flagImpulso) glRotatef(impulsoOmbroE, 1.0, 0.0, 0.0);
+            else if (flagCaminhada) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -546,8 +621,8 @@ void bracoEsquerdo() {
                 glColor3f(0.72f, 0.0f, 0.0f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
-                else if (flagImpulso) glRotatef(impulsoCotoveloE, 1.0, 0.0, 0.0);
+                if (flagImpulso) glRotatef(impulsoCotoveloE, 1.0, 0.0, 0.0);
+                else if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
                 else glRotatef(-inicialCotoveloE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -935,7 +1010,10 @@ void portaCabana() {
         glPushMatrix();
             glColor3f(0.82, 0.5, 0.05);
             glTranslatef(0.0f, -0.09f, 0.01f);
-            glScalef(0.5f, 2.9f, 0.7f);
+            glTranslatef(0.0f, 0.0f, 0.0175f);
+            glRotatef(anguloPorta, 0.0, 1.0, 0.0);
+            glTranslatef(0.0f, 0.0f, -0.0175f);
+            glScalef(0.05f, 2.9f, 0.7f);
             glutSolidCube(0.05);
 
             // macaneta
@@ -1234,6 +1312,9 @@ void leituraTeclado(unsigned char tecla) {
             break;
         case 'C':   // aumentar angulo da cena em Z
             anguloCenaZ += 2;
+            break;
+        case 'p':
+            anguloPorta += 2;
             break;
         default:
             glutIdleFunc(NULL);
