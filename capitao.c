@@ -8,7 +8,7 @@
 #include <time.h>
 
 /* VARIAVEIS GLOBAIS */
-int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0, flagImpulso = 0;
+int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0;
 
@@ -21,7 +21,8 @@ auxCotoveloE = 2.0f, auxCotoveloD = 2.0f, escudoX, escudoY = -0.3f, escudoZ,
 inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
 impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, anguloPorta = 0.0f,
-rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
+posicaoMaoX = 0.0f, posicaoMaoY = 0.0f, posicaoMaoZ = 0.0f,
+rotacaoVoandoX = 0.0f, escudoVoandoX = 0.0f, rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -50,42 +51,43 @@ void redimensionarDesenho(GLsizei largura, GLsizei altura) {
 
 /* ILUMINACAO DA CENA */
 void iluminarCenario() {
-    GLfloat luzAmbiente[4] = {0.3, 0.3, 0.3, 1.0};
-    GLfloat luzDifusa[4] = {0.7, 0.7, 0.7, 1.0};
-    GLfloat luzEspecular[4] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat posicaoLuz[4] = {-50.0f, 50.0, 50.0, 1.0};
-    GLfloat objetoAmbiente[4] = {0.5, 0.0, 0.0, 1.0};
-    GLfloat objetoDifusa[4] = {1.0,0.0,0.0,1.0};
-    GLfloat especularidade[4] = {0.5, 0.5, 0.5, 1.0};
-    GLint especMaterial = 30;
+    GLfloat light_ambient[]  = { 0.5f, 0.5f, 0.5f, 1.0f };
+    GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_position[] = { 0.0f, 2.0f, 1.0f, 0.0f };
+
+    GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+    GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+    GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat high_shininess[] = { 100.0f };
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
 
     glClearColor(0.74902, 0.847059, 0.847059, 0.0);
 
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
-
-    glMaterialfv (GL_FRONT_AND_BACK, GL_AMBIENT, objetoAmbiente);
-    glMaterialfv (GL_FRONT_AND_BACK, GL_DIFFUSE, objetoDifusa);
-    glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade);
-    glMateriali(GL_FRONT,GL_SHININESS, especMaterial);
-
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_DEPTH_TEST);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,   mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,   mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,  mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, high_shininess);
 }
 
 // TODO aplicação de textura
 
 /* ESTRUTURA DA FILA DE ESCUDOS */
 typedef struct escudo {
-    float posicaoEscudoX;
-    float posicaoEscudoY;
-    float posicaoEscudoZ;
+    float posicaoEscudoX, posicaoEscudoY, posicaoEscudoZ;
+    float anguloEscudoX, anguloEscudoY, anguloEscudoZ;
     struct escudo *proximoEscudo;
 } noEscudo;
 typedef noEscudo *pontEscudo;
@@ -112,6 +114,10 @@ int inserirEscudo(filaEscudos fila, float posicaoX, float posicaoY, float posica
     novoEscudo->posicaoEscudoX = posicaoX;
     novoEscudo->posicaoEscudoY = posicaoY;
     novoEscudo->posicaoEscudoZ = posicaoZ;
+    novoEscudo->anguloEscudoX = 0.0f;
+    novoEscudo->anguloEscudoY = 0.0f;
+    novoEscudo->anguloEscudoZ = 0.0f;
+
     novoEscudo->proximoEscudo = NULL;
 
     if (fila->ultimoEscudo != NULL) fila->ultimoEscudo->proximoEscudo = novoEscudo;
@@ -163,6 +169,7 @@ void controlePersonagem(void) {
             break;
 
         case IdaX:
+            flagCaminhada = 1;
             if (posicaoPersonagemX <= (filaEscudosCena->primeiroEscudo->posicaoEscudoX - 0.02))
                 posicaoPersonagemX += velPersonagem;
             else {
@@ -195,15 +202,19 @@ void controlePersonagem(void) {
         case PegandoEscudo:
             flagCaminhada = 0;
             flagImpulso = 1;
+
             if (impulsoCotoveloE > -90) impulsoCotoveloE -= 2;
+            else if (filaEscudosCena->primeiroEscudo->posicaoEscudoY < -0.15) filaEscudosCena->primeiroEscudo->posicaoEscudoY += velPersonagem;
+            else if (filaEscudosCena->primeiroEscudo->anguloEscudoX < 90) filaEscudosCena->primeiroEscudo->anguloEscudoX += (velPersonagem * 500);
             else {
+                filaEscudosCena = removerEscudo(filaEscudosCena);
                 if (posicaoPersonagemZ < -0.15) estadoPersonagem = VoltaZEsq;
                 else if (posicaoPersonagemZ > -0.15) estadoPersonagem = VoltaZDir;
             }
             break;
 
         case VoltaZEsq:
-            flagCaminhada = 1;
+            flagCaminhada = 1; flagEscudo = 1;
             if (rotacaoPersonagem > 0.0) rotacaoPersonagem -= (velPersonagem * 500);
             else {
                 if (posicaoPersonagemZ < -0.15) posicaoPersonagemZ += velPersonagem;
@@ -212,7 +223,7 @@ void controlePersonagem(void) {
             break;
 
         case VoltaZDir:
-            flagCaminhada = 1;
+            flagCaminhada = 1; flagEscudo = 1;
             if (rotacaoPersonagem < 180.0) rotacaoPersonagem += (velPersonagem * 500);
             else {
                 if (posicaoPersonagemZ > -0.15) posicaoPersonagemZ -= velPersonagem;
@@ -249,14 +260,26 @@ void controlePersonagem(void) {
             break;
 
         case JogandoEscudo:
+            flagJogar = 1; flagEscudo = 0;
             if (impulsoOmbroE > -90.0) impulsoOmbroE -= 10;
+            else if (escudoVoandoX < 2.5f) {
+                escudoVoandoX += (3 * velPersonagem);
+                rotacaoVoandoX += 10;
+            }
             else estadoPersonagem = RecuperandoEscudo;
             break;
 
         case RecuperandoEscudo:
-            if (impulsoOmbroE < 0.0) impulsoOmbroE += 10;
-            else if (impulsoCotoveloE > -90.0) impulsoCotoveloE -= 10;
-            else estadoPersonagem = VoltandoCasa;
+            if (escudoVoandoX > 0.0f) {
+                escudoVoandoX -= (3 * velPersonagem);
+                rotacaoVoandoX += 10;
+            }
+            else {
+                flagJogar = 0; flagEscudo = 1;
+                if (impulsoOmbroE < 0.0) impulsoOmbroE += 10;
+                else if (impulsoCotoveloE > -90.0) impulsoCotoveloE -= 10;
+                else estadoPersonagem = VoltandoCasa;
+            }
             break;
 
         case VoltandoCasa:
@@ -273,13 +296,10 @@ void controlePersonagem(void) {
             break;
 
         case EmCasa:
-            flagImpulso = 0;
+            flagImpulso = 0; impulsoCotoveloE = 0.0f; impulsoOmbroE = 0.0f; flagEscudo = 0;
             if (anguloPorta > 0.0) anguloPorta -= 5;
             else if (rotacaoPersonagem > 90.0) rotacaoPersonagem -= (velPersonagem * 500);
-            else {
-                estadoPersonagem = SaindoCasa;
-                filaEscudosCena = removerEscudo(filaEscudosCena);
-            }
+            else estadoPersonagem = SaindoCasa;
             break;
 
         case SaindoCasa:
@@ -336,23 +356,60 @@ const char* obterEstado(enum maqPersonagem estado) {
     }
 }
 
+/* DESENHO DO ESCUDO */
+void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, float angZ) {
+    float angulo; int i;
+
+    // TODO aplicar textura no escudo
+
+    glPushMatrix();
+    glColor3f(0.0f, 0.02f, 0.31f);
+    glTranslatef(posX, posY, posZ);
+    glRotatef(angX, 1.0, 0.0, 0.0);
+    glRotatef(angY, 0.0, 1.0, 0.0);
+    glRotatef(angZ, 0.0, 0.0, 1.0);
+
+    glBegin(GL_QUAD_STRIP);
+    for (i = 0; i <= 20; i++) {
+        angulo = (float) (2 * M_PI * i / 20.0f);
+        glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+        glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+    }
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    for (i = 0; i < 20; i++) {
+        angulo = (float) (2 * M_PI * i / 20.0f);
+        glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+    }
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    for (i = 0; i < 20; i++) {
+        angulo = (float) (2 * M_PI * i / 20.0);
+        glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+    }
+    glEnd();
+    glPopMatrix();
+}
+
 /* DESENHO DO CAPITAO AMERICA */
 void cabeca() {
     int i; float angulo;
 
-    // TODO desenhar cabelo e barba com splines
-    // TODO aplicar textura para o rosto
+    // TODO desenhar rosto com splines
 
     // cabeca
     glPushMatrix();
-        glColor3f(0.92f, 0.79f, 0.49f);
+        glColor3f(0.0f, 0.16f, 0.27f);
         glScalef(1.0f, 1.2f, 1.0f);
         glutSolidSphere(0.03, 50, 50);
     glPopMatrix();
 
     // pescoco
     glPushMatrix();
-        glColor3f(0.92f, 0.79f, 0.49f);
+        // glColor3f(0.92f, 0.79f, 0.49f); --- cor da pele
+        glColor3f(0.0f, 0.16f, 0.27f);
         glTranslatef(0.0f, -0.05f, 0.0f);
 
         glBegin(GL_QUAD_STRIP);
@@ -382,7 +439,7 @@ void cabeca() {
 void tronco() {
     int i; float angulo;
 
-    // TODO aplicar textura no corpo
+    // TODO aplicar textura no tronco
 
     glPushMatrix();
         glColor3f(0.0f, 0.24f, 0.41f);
@@ -650,6 +707,10 @@ void bracoEsquerdo() {
 
                 // mao esquerda
                 glPushMatrix();
+                    if (flagEscudo) desenharEscudo(posicaoMaoX, posicaoMaoY, posicaoMaoZ, 0.0, 0.0, 90.0);
+                    else if (flagJogar) desenharEscudo(0.0, -escudoVoandoX, 0.0, rotacaoVoandoX, 0.0, 90.0);
+                    posicaoMaoX = 0.0f; posicaoMaoY = -0.018f; posicaoMaoZ = 0.0f;
+                    glColor3f(0.72f, 0.0f, 0.0f);
                     glTranslatef(0.0f, -0.011f, 0.0f);
                     glScalef(0.3f, 1.1f, 0.8f);
                     glutSolidCube(0.021f);
@@ -830,51 +891,12 @@ void desenharPersonagem() {
         glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
         glRotatef(rotacaoPersonagem, 0.0, 1.0, 0.0);
 
-        /*if (filaEscudosCena->primeiroEscudo != NULL) {
-            printf("PersX = %lf, PersZ = %lf --- EscX = %lf, EsxZ = %lf\n",
-                   posicaoPersonagemX, posicaoPersonagemZ,
-                   filaEscudosCena->primeiroEscudo->posicaoEscudoX, filaEscudosCena->primeiroEscudo->posicaoEscudoZ);
-        }*/
-
         cabeca();
         tronco();
         bracoDireito();
         bracoEsquerdo();
         pernaDireita();
         pernaEsquerda();
-    glPopMatrix();
-}
-
-/* DESENHO DO ESCUDO */
-void desenharEscudo(float posX, float posY, float posZ) {
-    float angulo; int i;
-
-    // TODO aplicar textura no escudo
-
-    glPushMatrix();
-        glColor3f(0.0f, 0.02f, 0.31f);
-        glTranslatef(posX, posY, posZ);
-        glBegin(GL_QUAD_STRIP);
-            for (i = 0; i <= 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0f);
-                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
-                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
-            }
-        glEnd();
-
-        glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0f);
-                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
-            }
-        glEnd();
-
-        glBegin(GL_POLYGON);
-            for (i = 0; i < 20; i++) {
-                angulo = (float) (2 * M_PI * i / 20.0);
-                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
-            }
-        glEnd();
     glPopMatrix();
 }
 
@@ -1219,7 +1241,7 @@ void desenharCenario() {
     for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, posicaoZ);
 
     // arvores da frente
-    for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, (posicaoZ + 2.0f));
+    // for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, (posicaoZ + 2.0f));
 
     // arvores da esquerda
     for (float i = 0; i <= 2.0; i = i + 0.25f) troncoArvore(posicaoX, posicaoY, (posicaoZ + i));
@@ -1230,7 +1252,8 @@ void desenharCenario() {
     // desenhar escudos, se houver
     if (filaEscudosCena->primeiroEscudo != NULL)
         for (auxEscudo = filaEscudosCena->primeiroEscudo; auxEscudo != NULL; auxEscudo = auxEscudo->proximoEscudo)
-            desenharEscudo(auxEscudo->posicaoEscudoX, (auxEscudo->posicaoEscudoY + 0.03f), auxEscudo->posicaoEscudoZ);
+            desenharEscudo(auxEscudo->posicaoEscudoX, (auxEscudo->posicaoEscudoY + 0.03f), auxEscudo->posicaoEscudoZ,
+                    auxEscudo->anguloEscudoX, auxEscudo->anguloEscudoY, auxEscudo->anguloEscudoZ);
 
     // desenhar cabana
     cabanaCompleta();
@@ -1250,7 +1273,7 @@ void desenharCenaCompleta() {
     glPopMatrix();
 
     controlePersonagem();
-    printf("%s\n", obterEstado(estadoPersonagem));
+    // printf("%s\n", obterEstado(estadoPersonagem));
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -1312,9 +1335,6 @@ void leituraTeclado(unsigned char tecla) {
             break;
         case 'C':   // aumentar angulo da cena em Z
             anguloCenaZ += 2;
-            break;
-        case 'p':
-            anguloPorta += 2;
             break;
         default:
             glutIdleFunc(NULL);
