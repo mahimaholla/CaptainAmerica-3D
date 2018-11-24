@@ -10,7 +10,7 @@
 /* VARIAVEIS GLOBAIS */
 int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
 
-GLfloat correcaoAspecto, anguloProjecao = 45.0;
+GLfloat correcaoAspecto, anguloProjecao = 45.0, planoTextura[] = {1.0f, 0.0f, 0.0f, 0.0f};
 
 float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCenaX = 0.0f, anguloCenaY = 0.0f,
 anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = -1.06f,
@@ -38,6 +38,14 @@ void ProjecaoCena() {
     glRotatef(anguloCameraY, 0.0, 1.0, 0.0);
     glRotatef(anguloCameraX, 1.0, 0.0, 0.0);
     gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+
+    /*glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glTexGenfv(GL_S, GL_OBJECT_LINEAR, planoTextura);
+    glTexGenfv(GL_T, GL_OBJECT_LINEAR, planoTextura);*/
+
+    glTexGenf(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+    glTexGenf(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 }
 
 /* REDIMENSIONAR DESENHO (RESHAPE) */
@@ -137,6 +145,47 @@ filaEscudos removerEscudo(filaEscudos fila) {
     return fila;
 }
 filaEscudos filaEscudosCena;
+
+/* ESTRUTURA PARA IMAGEM DA TEXTURA */
+typedef struct BMPImagem {
+    int width;
+    int height;
+    char *data;
+} BMPImage;
+GLuint texture_id[1];
+
+/* RECEBER TEXTURA */
+void getBitmapImageData(char *pFileName, BMPImage *pImage) {
+    FILE *pFile = NULL;
+    unsigned short nNumPlanes;
+    unsigned short nNumBPP;
+    int i;
+
+    if((pFile = fopen(pFileName, "rb")) == NULL) printf("ERROR: getBitmapImageData - %s not found.\n", pFileName);
+
+    fseek(pFile, 18, SEEK_CUR);
+
+    if((i = fread(&pImage->width, 4, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read width from %s.\n ", pFileName);
+    if((i = fread(&pImage->height, 4, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read height from %s.\n ", pFileName);
+    if((fread(&nNumPlanes, 2, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read plane count from %s.\n", pFileName);
+    if(nNumPlanes != 1) printf("ERROR: getBitmapImageData - Plane count from %s.\n ", pFileName);
+    if((i = fread(&nNumBPP, 2, 1, pFile)) != 1) printf( "ERROR: getBitmapImageData - Couldn't read BPP from %s.\n ", pFileName);
+    if(nNumBPP != 24) printf("ERROR: getBitmapImageData - BPP from %s.\n ", pFileName);
+
+    fseek(pFile, 24, SEEK_CUR);
+
+    int nTotalImagesize = (pImage->width * pImage->height) * 3;
+    pImage->data = (char*) malloc(nTotalImagesize);
+
+    if((i = fread(pImage->data, nTotalImagesize, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read image data from %s.\n ", pFileName);
+
+    char charTemp;
+    for(i = 0; i < nTotalImagesize; i += 3) {
+        charTemp = pImage->data[i];
+        pImage->data[i] = pImage->data[i + 2];
+        pImage->data[i + 2] = charTemp;
+    }
+}
 
 /* MAQUINA DE ESTADOS PARA O PERSONAGEM */
 enum maqPersonagem {
@@ -1483,13 +1532,29 @@ void desenharCenario() {
     // auxiliar para desenhar escudos
     pontEscudo auxEscudo;
 
-    // grama
+    // grama (com textura)
+    BMPImage imagemTextura;
+    getBitmapImageData("/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/textures/grama.bmp", &imagemTextura);
+
+    glEnable(GL_TEXTURE_2D);
+    glGenTextures(1, &texture_id[0]);
+    glBindTexture(GL_TEXTURE_2D, texture_id[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, imagemTextura.width, imagemTextura.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imagemTextura.data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glEnable(GL_TEXTURE_GEN_S);
+    glEnable(GL_TEXTURE_GEN_T);
+
     glPushMatrix();
         glColor3f(0.01f, 0.45f, 0.02f);
         glTranslatef(0.0f, -0.3f, -0.25f);
         glScalef(100.0f, 0.5f, 50.0f);
         glutSolidCube(0.05f);
     glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
 
     // arvores do fundo
     for (float i = 0; i <= 4.5; i = i + 0.25f) troncoArvore((posicaoX + i), posicaoY, posicaoZ);
