@@ -8,21 +8,36 @@
 #include <time.h>
 
 /* VARIAVEIS GLOBAIS */
-int alturaJanela = 700, larguraJanela = 700, flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
+// dimensoes da janela
+int alturaJanela = 700, larguraJanela = 700;
+
+// flags
+int flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
+int flagMenuOmbroE = 1, flagMenuOmbroD = 1, flagMenuCotoveloE = 0, flagMenuCotoveloD = 0, flagMenuCoxaE = 0,
+flagMenuCoxaD = 0, flagMenuCanelaE = 0, flagMenuCanelaD = 0, flagMenuCabeca = 0;
+int flagAnimSecundaria = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0, planoTextura[] = {1.0f, 0.0f, 0.0f, 0.0f};
 
-float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f, anguloCenaX = 0.0f, anguloCenaY = 0.0f,
-anguloCenaZ = 0.0f, anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f, posicaoPersonagemX = -1.06f,
-posicaoPersonagemY = 0.0f, posicaoPersonagemZ = -0.15f, anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f,
-anguloCanelaD = 45.0f, auxCoxaE = 2.0f, auxCoxaD = 2.0f, auxCanelaE = 2.0f, auxCanelaD = 2.0f, anguloOmbroE = 0.0f,
-anguloOmbroD = 0.0f, anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 2.0f, auxOmbroD = 2.0f,
-auxCotoveloE = 2.0f, auxCotoveloD = 2.0f, escudoX, escudoY = -0.3f, escudoZ,
-inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
+// camera e cena
+float posicaoCameraX = 0.0f, posicaoCameraY = 0.0f, posicaoCameraZ = 0.0f,
+anguloCameraX = 0.0f, anguloCameraY = 0.0f, anguloCameraZ = 0.0f;
+float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
+
+// personagem
+float posicaoPersonagemX = -1.06f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = -0.15f,
+rotacaoPersonagem = 90.0f, velPersonagem = 0.004, rotacaoCabeca = 0.0f;
+float anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f, anguloCanelaD = 45.0f, auxCoxaE = 2.0f,
+auxCoxaD = 2.0f, auxCanelaE = 2.0f, auxCanelaD = 2.0f, anguloOmbroE = 0.0f, anguloOmbroD = 0.0f,
+anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 2.0f, auxOmbroD = 2.0f, auxCotoveloE = 2.0f,
+auxCotoveloD = 2.0f, inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
-impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, anguloPorta = 0.0f,
-posicaoMaoX = 0.0f, posicaoMaoY = 0.0f, posicaoMaoZ = 0.0f,
-rotacaoVoandoX = 0.0f, escudoVoandoX = 0.0f, rotacaoPersonagem = 90.0f, velPersonagem = 0.004;
+impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, menuCanelaD = 0.0f, menuCotoveloE = 0.0f;
+
+// outros objetos
+float escudoX, escudoY = -0.3f, escudoZ, rotacaoVoandoX = 0.0f, escudoVoandoX = 0.0f;
+float anguloPorta = 0.0f, posicaoMaoX = 0.0f, posicaoMaoY = 0.0f, posicaoMaoZ = 0.0f;
+
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -473,116 +488,120 @@ void cabeca() {
 
     // cabeca
     glPushMatrix();
-        glColor3f(0.92f, 0.79f, 0.49f);
-        glScalef(1.0f, 1.2f, 1.0f);
-        glutSolidSphere(0.03, 50, 50);
-    glPopMatrix();
+        if (flagMenuCabeca != 0) glRotatef(rotacaoCabeca, 0.0, 1.0, 0.0);
 
-    // cabelo
-    glPushMatrix();
-        glTranslatef(0.0f, 0.005f, -0.01f);
-        glColor3f(0.61, 0.41, 0.0);
-        glScalef(1.0f, 1.2f, 1.0f);
-        glutSolidSphere(0.03, 50, 50);
-    glPopMatrix();
+        glPushMatrix();
+            glColor3f(0.92f, 0.79f, 0.49f);
+            glScalef(1.0f, 1.2f, 1.0f);
+            glutSolidSphere(0.03, 50, 50);
+        glPopMatrix();
 
-    glPushMatrix();
-        glTranslatef(0.0f, 0.035f, 0.0f);
-        glRotatef(250.0, 1.0, 0.0, 0.0);
-        glColor3f(0.61, 0.41, 0.0);
-        glutSolidCone(0.02f, 0.006f, 50, 50);
-    glPopMatrix();
+        // cabelo
+        glPushMatrix();
+            glTranslatef(0.0f, 0.005f, -0.01f);
+            glColor3f(0.61, 0.41, 0.0);
+            glScalef(1.0f, 1.2f, 1.0f);
+            glutSolidSphere(0.03, 50, 50);
+        glPopMatrix();
 
-    // olho esquerdo
-    glPushMatrix();
-        glColor3f(0.01, 0.61, 0.78);
-        glTranslatef(-0.01f, 0.01f, 0.025f);
-        glRotatef(90.0, 1.0, 0.0, 0.0);
+        glPushMatrix();
+            glTranslatef(0.0f, 0.035f, 0.0f);
+            glRotatef(250.0, 1.0, 0.0, 0.0);
+            glColor3f(0.61, 0.41, 0.0);
+            glutSolidCone(0.02f, 0.006f, 50, 50);
+        glPopMatrix();
 
-        glBegin(GL_QUAD_STRIP);
-        for (i = 0; i <= 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
-            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
-        }
-        glEnd();
+        // olho esquerdo
+        glPushMatrix();
+            glColor3f(0.01, 0.61, 0.78);
+            glTranslatef(-0.01f, 0.01f, 0.025f);
+            glRotatef(90.0, 1.0, 0.0, 0.0);
 
-        glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
-        }
-        glEnd();
+            glBegin(GL_QUAD_STRIP);
+            for (i = 0; i <= 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+                glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+            }
+            glEnd();
 
-        glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0);
-            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
-        }
-        glEnd();
-    glPopMatrix();
+            glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+            }
+            glEnd();
 
-    // olho direito
-    glPushMatrix();
-        glColor3f(0.01, 0.61, 0.78);
-        glTranslatef(0.01f, 0.01f, 0.025f);
-        glRotatef(90.0, 1.0, 0.0, 0.0);
+            glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0);
+                glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+            }
+            glEnd();
+        glPopMatrix();
 
-        glBegin(GL_QUAD_STRIP);
-        for (i = 0; i <= 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
-            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
-        }
-        glEnd();
+        // olho direito
+        glPushMatrix();
+            glColor3f(0.01, 0.61, 0.78);
+            glTranslatef(0.01f, 0.01f, 0.025f);
+            glRotatef(90.0, 1.0, 0.0, 0.0);
 
-        glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0f);
-            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
-        }
-        glEnd();
+            glBegin(GL_QUAD_STRIP);
+            for (i = 0; i <= 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+                glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+            }
+            glEnd();
 
-        glBegin(GL_POLYGON);
-        for (i = 0; i < 20; i++) {
-            angulo = (float) (2 * M_PI * i / 20.0);
-            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
-        }
-        glEnd();
-    glPopMatrix();
+            glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+            }
+            glEnd();
 
-    // nariz
-    glPushMatrix();
-        glTranslatef(0.001f, 0.0f, 0.03f);
-        glRotatef(30.0, 0.0, 0.0, 1.0);
-        glColor3f(0.0, 0.0, 0.0);
-        glScalef(0.2, 0.8, 0.2);
-        glutSolidCube(0.008);
-    glPopMatrix();
+            glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0);
+                glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+            }
+            glEnd();
+        glPopMatrix();
 
-    glPushMatrix();
-        glTranslatef(0.0f, -0.003f, 0.03f);
-        glRotatef(90.0, 0.0, 0.0, 1.0);
-        glColor3f(0.0, 0.0, 0.0);
-        glScalef(0.2, 0.8, 0.2);
-        glutSolidCube(0.008);
-    glPopMatrix();
+        // nariz
+        glPushMatrix();
+            glTranslatef(0.001f, 0.0f, 0.03f);
+            glRotatef(30.0, 0.0, 0.0, 1.0);
+            glColor3f(0.0, 0.0, 0.0);
+            glScalef(0.2, 0.8, 0.2);
+            glutSolidCube(0.008);
+        glPopMatrix();
 
-    // boca
-    glPushMatrix();
-        glTranslatef(-0.009f, -0.012f, 0.027f);
-        glRotatef(30.0, 0.0, 0.0, 1.0);
-        glColor3f(0.0, 0.0, 0.0);
-        glScalef(0.2, 0.8, 0.2);
-        glutSolidCube(0.008);
-    glPopMatrix();
+        glPushMatrix();
+            glTranslatef(0.0f, -0.003f, 0.03f);
+            glRotatef(90.0, 0.0, 0.0, 1.0);
+            glColor3f(0.0, 0.0, 0.0);
+            glScalef(0.2, 0.8, 0.2);
+            glutSolidCube(0.008);
+        glPopMatrix();
 
-    glPushMatrix();
-        glTranslatef(0.0f, -0.014f, 0.027f);
-        glRotatef(90.0, 0.0, 0.0, 1.0);
-        glColor3f(0.0, 0.0, 0.0);
-        glScalef(0.2, 2.0, 0.2);
-        glutSolidCube(0.008);
+        // boca
+        glPushMatrix();
+            glTranslatef(-0.009f, -0.012f, 0.027f);
+            glRotatef(30.0, 0.0, 0.0, 1.0);
+            glColor3f(0.0, 0.0, 0.0);
+            glScalef(0.2, 0.8, 0.2);
+            glutSolidCube(0.008);
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslatef(0.0f, -0.014f, 0.027f);
+            glRotatef(90.0, 0.0, 0.0, 1.0);
+            glColor3f(0.0, 0.0, 0.0);
+            glScalef(0.2, 2.0, 0.2);
+            glutSolidCube(0.008);
+        glPopMatrix();
     glPopMatrix();
 
     // pescoco
@@ -631,7 +650,6 @@ void tronco() {
                 glTranslatef(0.0f, 0.0f, 0.032f);
                 glScalef(0.05, 0.05, 0.05);
                 glColor3f(1.0f, 1.0f, 1.0f);
-                glEnable(GL_LINE_SMOOTH);
                 glBegin(GL_LINE_LOOP);
                     glVertex3f(0.0, 0.25, 0.0);
                     glVertex3f(0.08, 0.1, 0.0);
@@ -644,7 +662,6 @@ void tronco() {
                     glVertex3f(-0.2, 0.1, 0.0);
                     glVertex3f(-0.08, 0.1, 0.0);
                 glEnd();
-                glDisable(GL_LINE_SMOOTH);
             glPopMatrix();
         glPopMatrix();
 
@@ -862,7 +879,7 @@ void bracoDireito() {
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            if (flagCaminhada) glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
+            if (flagCaminhada || (flagMenuOmbroD != 0)) glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroD, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -898,7 +915,7 @@ void bracoDireito() {
                 glColor3f(0.72f, 0.0f, 0.0f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                if (flagCaminhada) glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
+                if (flagCaminhada || (flagMenuCotoveloD != 0)) glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
                 else glRotatef(inicialCotoveloD, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -945,7 +962,7 @@ void bracoEsquerdo() {
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             if (flagImpulso) glRotatef(impulsoOmbroE, 1.0, 0.0, 0.0);
-            else if (flagCaminhada) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            else if (flagCaminhada || (flagMenuOmbroE != 0)) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -982,6 +999,7 @@ void bracoEsquerdo() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 if (flagImpulso) glRotatef(impulsoCotoveloE, 1.0, 0.0, 0.0);
+                else if (flagMenuCotoveloE != 0) glRotatef(menuCotoveloE, 1.0, 0.0, 0.0);
                 else if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
                 else glRotatef(-inicialCotoveloE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
@@ -1032,7 +1050,7 @@ void pernaDireita() {
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            if (flagCaminhada) glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
+            if (flagCaminhada || (flagMenuCoxaD != 0)) glRotatef(-anguloCoxaD, 1.0, 0.0, 0.0);
             else glRotatef(-inicialCoxaD, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -1068,7 +1086,8 @@ void pernaDireita() {
                 glColor3f(0.15f, 0.17f, 0.19f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                if (flagCaminhada) glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
+                if (flagMenuCanelaD != 0) glRotatef(menuCanelaD, 1.0, 0.0, 0.0);
+                else if (flagCaminhada) glRotatef(anguloCanelaD, 1.0, 0.0, 0.0);
                 else glRotatef(inicialCanelaD, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -1114,7 +1133,7 @@ void pernaEsquerda() {
             glColor3f(0.0f, 0.16f, 0.27f);
             glTranslatef(-0.012f, -0.21f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            if (flagCaminhada) glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
+            if (flagCaminhada || (flagMenuCoxaE != 0)) glRotatef(anguloCoxaE, 1.0, 0.0, 0.0);
             else glRotatef(inicialCoxaE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -1150,7 +1169,7 @@ void pernaEsquerda() {
                 glColor3f(0.15f, 0.17f, 0.19f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                if (flagCaminhada) glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
+                if (flagCaminhada || (flagMenuCanelaE != 0)) glRotatef(anguloCanelaE, 1.0, 0.0, 0.0);
                 else glRotatef(inicialCanelaE, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -1637,24 +1656,14 @@ void leituraTeclado(unsigned char tecla) {
         case 'D':   // aumentar angulo da camera em Z
             anguloCameraZ += 2;
             break;
-        case 's':   // diminuir angulo da cena em X
-            anguloCenaX -= 2;
-            break;
-        case 'S':   // aumentar angulo da cena em X
-            anguloCenaX += 2;
-            break;
+
         case 'f':   // diminuir angulo da cena em Y
             anguloCenaY -= 2;
             break;
         case 'F':   // aumentar angulo da cena em Y
             anguloCenaY += 2;
             break;
-        case 'c':   // diminuir angulo da cena em Z
-            anguloCenaZ -= 2;
-            break;
-        case 'C':   // aumentar angulo da cena em Z
-            anguloCenaZ += 2;
-            break;
+
         default:
             glutIdleFunc(NULL);
             break;
@@ -1709,19 +1718,227 @@ void caminhadaPersonagem() {
 void leituraSetas(int tecla) {
     switch (tecla) {
         case GLUT_KEY_RIGHT:
-            posicaoPersonagemX += 0.005;
+            // girar cabeca
+            if (flagMenuCabeca == 1) {
+                if (rotacaoCabeca > -90)
+                    rotacaoCabeca -= 2;
+            }
+
+            // girar ombro esquerdo
+            if (flagMenuOmbroE == 1) {
+                if (anguloOmbroE > -130)
+                    anguloOmbroE -= 2;
+            }
+
+            // girar ombro direito
+            if (flagMenuOmbroD == 1) {
+                if (anguloOmbroD > -130)
+                    anguloOmbroD -= 2;
+            }
+
+            // girar cotovelo esquerdo
+            if (flagMenuCotoveloE == 1) {
+                if (menuCotoveloE > -90)
+                    menuCotoveloE -= 2;
+            }
+
+            // girar cotovelo direito
+            if (flagMenuCotoveloD == 1) {
+                if (anguloCotoveloD > -90)
+                    anguloCotoveloD -= 2;
+            }
+
+            // girar coxa esquerda
+            if (flagMenuCoxaE == 1) {
+                if (anguloCoxaE > -90)
+                    anguloCoxaE -= 2;
+            }
+
+            // girar coxa direita
+            if (flagMenuCoxaD == 1) {
+                if (anguloCoxaD < 90)
+                    anguloCoxaD += 2;
+            }
+
+            // girar joelho esquerdo
+            if (flagMenuCanelaE == 1) {
+                if (anguloCanelaE > 0)
+                    anguloCanelaE -= 2;
+            }
+
+            // girar joelho direito
+            if (flagMenuCanelaD == 1) {
+                if (menuCanelaD > 0)
+                    menuCanelaD -= 2;
+            }
             break;
 
         case GLUT_KEY_LEFT:
-            posicaoPersonagemX -= 0.005;
+            // girar cabeca
+            if (flagMenuCabeca == 1) {
+                if (rotacaoCabeca < 90)
+                    rotacaoCabeca += 2;
+            }
+
+            // girar ombro esquerdo
+            if (flagMenuOmbroE == 1) {
+                if (anguloOmbroE < 45)
+                    anguloOmbroE += 2;
+            }
+
+            // girar ombro direito
+            if (flagMenuOmbroD == 1) {
+                if (anguloOmbroD < 45)
+                    anguloOmbroD += 2;
+            }
+
+            // girar cotovelo esquerdo
+            if (flagMenuCotoveloE == 1) {
+                if (menuCotoveloE < 0)
+                    menuCotoveloE += 2;
+            }
+
+            // girar cotovelo direito
+            if (flagMenuCotoveloD == 1) {
+                if (anguloCotoveloD < 0)
+                    anguloCotoveloD += 2;
+            }
+
+            // girar coxa esquerda
+            if (flagMenuCoxaE == 1) {
+                if (anguloCoxaE < 45)
+                    anguloCoxaE += 2;
+            }
+
+            // girar coxa direita
+            if (flagMenuCoxaD == 1) {
+                if (anguloCoxaD > -45)
+                    anguloCoxaD -= 2;
+            }
+
+            // girar joelho esquerdo
+            if (flagMenuCanelaE == 1) {
+                if (anguloCanelaE < 50)
+                    anguloCanelaE += 2;
+            }
+
+            // girar joelho direito
+            if (flagMenuCanelaD == 1) {
+                if (menuCanelaD < 50)
+                    menuCanelaD += 2;
+            }
             break;
 
         case GLUT_KEY_UP:
-            posicaoPersonagemZ += 0.005;
+            // girar cabeca
+            if (flagMenuCabeca == 1) {
+                if (rotacaoCabeca > -90)
+                    rotacaoCabeca -= 2;
+            }
+
+            // girar ombro esquerdo
+            if (flagMenuOmbroE == 1) {
+                if (anguloOmbroE > -130)
+                    anguloOmbroE -= 2;
+            }
+
+            // girar ombro direito
+            if (flagMenuOmbroD == 1) {
+                if (anguloOmbroD > -130)
+                    anguloOmbroD -= 2;
+            }
+
+            // girar cotovelo esquerdo
+            if (flagMenuCotoveloE == 1) {
+                if (menuCotoveloE > -90)
+                    menuCotoveloE -= 2;
+            }
+
+            // girar cotovelo direito
+            if (flagMenuCotoveloD == 1) {
+                if (anguloCotoveloD > -90)
+                    anguloCotoveloD -= 2;
+            }
+
+            // girar coxa esquerda
+            if (flagMenuCoxaE == 1) {
+                if (anguloCoxaE > -90)
+                    anguloCoxaE -= 2;
+            }
+
+            // girar coxa direita
+            if (flagMenuCoxaD == 1) {
+                if (anguloCoxaD < 90)
+                    anguloCoxaD += 2;
+            }
+
+            // girar joelho esquerdo
+            if (flagMenuCanelaE == 1) {
+                if (anguloCanelaE > 0)
+                    anguloCanelaE -= 2;
+            }
+
+            // girar joelho direito
+            if (flagMenuCanelaD == 1) {
+                if (menuCanelaD > 0)
+                    menuCanelaD -= 2;
+            }
             break;
 
         case GLUT_KEY_DOWN:
-            posicaoPersonagemZ -= 0.005;
+            // girar cabeca
+            if (flagMenuCabeca == 1) {
+                if (rotacaoCabeca < 90)
+                    rotacaoCabeca += 2;
+            }
+
+            // girar ombro esquerdo
+            if (flagMenuOmbroE == 1) {
+                if (anguloOmbroE < 45)
+                    anguloOmbroE += 2;
+            }
+
+            // girar ombro direito
+            if (flagMenuOmbroD == 1) {
+                if (anguloOmbroD < 45)
+                    anguloOmbroD += 2;
+            }
+
+            // girar cotovelo esquerdo
+            if (flagMenuCotoveloE == 1) {
+                if (menuCotoveloE < 0)
+                    menuCotoveloE += 2;
+            }
+
+            // girar cotovelo direito
+            if (flagMenuCotoveloD == 1) {
+                if (anguloCotoveloD < 0)
+                    anguloCotoveloD += 2;
+            }
+
+            // girar coxa esquerda
+            if (flagMenuCoxaE == 1) {
+                if (anguloCoxaE < 45)
+                    anguloCoxaE += 2;
+            }
+
+            // girar coxa direita
+            if (flagMenuCoxaD == 1) {
+                if (anguloCoxaD > -45)
+                    anguloCoxaD -= 2;
+            }
+
+            // girar joelho esquerdo
+            if (flagMenuCanelaE == 1) {
+                if (anguloCanelaE < 50)
+                    anguloCanelaE += 2;
+            }
+
+            // girar joelho direito
+            if (flagMenuCanelaD == 1) {
+                if (menuCanelaD < 50)
+                    menuCanelaD += 2;
+            }
             break;
 
         default:
@@ -1747,6 +1964,11 @@ void criarEscudo(int botao, int estado) {
 
     ProjecaoCena();
     glutPostRedisplay();
+}
+
+/* MENU DE OPCOES */
+void menuOpcoes(GLint opcaoMenu) {
+
 }
 
 /* FUNCAO PRINCIPAL */
