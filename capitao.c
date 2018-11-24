@@ -82,8 +82,6 @@ void iluminarCenario() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, high_shininess);
 }
 
-// TODO aplicação de textura
-
 /* ESTRUTURA DA FILA DE ESCUDOS */
 typedef struct escudo {
     float posicaoEscudoX, posicaoEscudoY, posicaoEscudoZ;
@@ -204,8 +202,10 @@ void controlePersonagem(void) {
             flagImpulso = 1;
 
             if (impulsoCotoveloE > -90) impulsoCotoveloE -= 2;
-            else if (filaEscudosCena->primeiroEscudo->posicaoEscudoY < -0.15) filaEscudosCena->primeiroEscudo->posicaoEscudoY += velPersonagem;
-            else if (filaEscudosCena->primeiroEscudo->anguloEscudoX < 90) filaEscudosCena->primeiroEscudo->anguloEscudoX += (velPersonagem * 500);
+            else if (filaEscudosCena->primeiroEscudo->posicaoEscudoY < -0.15)
+                filaEscudosCena->primeiroEscudo->posicaoEscudoY += velPersonagem;
+            else if (filaEscudosCena->primeiroEscudo->anguloEscudoX < 90)
+                filaEscudosCena->primeiroEscudo->anguloEscudoX += (velPersonagem * 500);
             else {
                 filaEscudosCena = removerEscudo(filaEscudosCena);
                 if (posicaoPersonagemZ < -0.15) estadoPersonagem = VoltaZEsq;
@@ -360,36 +360,34 @@ const char* obterEstado(enum maqPersonagem estado) {
 void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, float angZ) {
     float angulo; int i;
 
-    // TODO aplicar textura no escudo
-
     glPushMatrix();
-    glColor3f(0.0f, 0.02f, 0.31f);
-    glTranslatef(posX, posY, posZ);
-    glRotatef(angX, 1.0, 0.0, 0.0);
-    glRotatef(angY, 0.0, 1.0, 0.0);
-    glRotatef(angZ, 0.0, 0.0, 1.0);
+        glColor3f(0.0f, 0.02f, 0.31f);
+        glTranslatef(posX, posY, posZ);
+        glRotatef(angX, 1.0, 0.0, 0.0);
+        glRotatef(angY, 0.0, 1.0, 0.0);
+        glRotatef(angZ, 0.0, 0.0, 1.0);
 
-    glBegin(GL_QUAD_STRIP);
-    for (i = 0; i <= 20; i++) {
-        angulo = (float) (2 * M_PI * i / 20.0f);
-        glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
-        glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
-    }
-    glEnd();
+        glBegin(GL_QUAD_STRIP);
+            for (i = 0; i <= 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+            }
+        glEnd();
 
-    glBegin(GL_POLYGON);
-    for (i = 0; i < 20; i++) {
-        angulo = (float) (2 * M_PI * i / 20.0f);
-        glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
-    }
-    glEnd();
+        glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0f);
+                glVertex3f(0.07f * cosf(angulo), 0.0f, 0.07f * sinf(angulo));
+            }
+        glEnd();
 
-    glBegin(GL_POLYGON);
-    for (i = 0; i < 20; i++) {
-        angulo = (float) (2 * M_PI * i / 20.0);
-        glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
-    }
-    glEnd();
+        glBegin(GL_POLYGON);
+            for (i = 0; i < 20; i++) {
+                angulo = (float) (2 * M_PI * i / 20.0);
+                glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
+            }
+        glEnd();
     glPopMatrix();
 }
 
@@ -397,18 +395,17 @@ void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, 
 void cabeca() {
     int i; float angulo;
 
-    // TODO desenhar rosto com splines
-
     // cabeca
     glPushMatrix();
-        glColor3f(0.0f, 0.16f, 0.27f);
+        glColor3f(0.92f, 0.79f, 0.49f);
         glScalef(1.0f, 1.2f, 1.0f);
         glutSolidSphere(0.03, 50, 50);
     glPopMatrix();
 
+    // cabelo
+
     // pescoco
     glPushMatrix();
-        // glColor3f(0.92f, 0.79f, 0.49f); --- cor da pele
         glColor3f(0.0f, 0.16f, 0.27f);
         glTranslatef(0.0f, -0.05f, 0.0f);
 
@@ -438,8 +435,6 @@ void cabeca() {
 
 void tronco() {
     int i; float angulo;
-
-    // TODO aplicar textura no tronco
 
     glPushMatrix();
         glColor3f(0.0f, 0.24f, 0.41f);
