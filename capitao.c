@@ -556,7 +556,7 @@ void tronco() {
                 glScalef(0.05, 0.05, 0.05);
                 glColor3f(1.0f, 1.0f, 1.0f);
                 glEnable(GL_LINE_SMOOTH);
-                glBegin(GL_LINE_LOOP);
+                glBegin(GL_POLYGON);
                     glVertex3f(0.0, 0.25, 0.0);
                     glVertex3f(0.08, 0.1, 0.0);
                     glVertex3f(0.2, 0.1, 0.0);
@@ -582,6 +582,7 @@ void tronco() {
 
         // barriga
         glPushMatrix();
+            glColor3f(0.84, 0.85, 0.85);
             glTranslatef(0.0f, -0.1f, 0.0f);
             glBegin(GL_QUAD_STRIP);
                 for (i = 0; i <= 20; i++) {
@@ -606,6 +607,107 @@ void tronco() {
                     glVertex3f(0.015f * cosf(angulo), 0.1f, 0.015f * sinf(angulo));
                 }
             glEnd();
+
+            // faixas vermelhas
+            glPushMatrix();
+                glTranslatef(0.008f, 0.0f, 0.011f);
+                glBegin(GL_QUAD_STRIP);
+                for (i = 0; i <= 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+            glPopMatrix();
+
+            glPushMatrix();
+                glTranslatef(-0.008f, 0.0f, 0.011f);
+                glBegin(GL_QUAD_STRIP);
+                for (i = 0; i <= 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+            glPopMatrix();
+
+            glPushMatrix();
+                glTranslatef(0.008f, 0.0f, -0.011f);
+                glBegin(GL_QUAD_STRIP);
+                for (i = 0; i <= 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+            glPopMatrix();
+
+            glPushMatrix();
+                glTranslatef(-0.008f, 0.0f, -0.011f);
+                glBegin(GL_QUAD_STRIP);
+                for (i = 0; i <= 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0f);
+                    glVertex3f(0.005f * cosf(angulo), 0.0f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+
+                glBegin(GL_POLYGON);
+                for (i = 0; i < 20; i++) {
+                    angulo = (float) (2 * M_PI * i / 20.0);
+                    glVertex3f(0.005f * cosf(angulo), 0.06f, 0.005f * sinf(angulo));
+                }
+                glEnd();
+            glPopMatrix();
 
             // cinto
             glPushMatrix();
