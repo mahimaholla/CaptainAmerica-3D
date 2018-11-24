@@ -403,6 +403,111 @@ void cabeca() {
     glPopMatrix();
 
     // cabelo
+    glPushMatrix();
+        glTranslatef(0.0f, 0.005f, -0.01f);
+        glColor3f(0.61, 0.41, 0.0);
+        glScalef(1.0f, 1.2f, 1.0f);
+        glutSolidSphere(0.03, 50, 50);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(0.0f, 0.035f, 0.0f);
+        glRotatef(250.0, 1.0, 0.0, 0.0);
+        glColor3f(0.61, 0.41, 0.0);
+        glutSolidCone(0.02f, 0.006f, 50, 50);
+    glPopMatrix();
+
+    // olho esquerdo
+    glPushMatrix();
+        glColor3f(0.01, 0.61, 0.78);
+        glTranslatef(-0.01f, 0.01f, 0.025f);
+        glRotatef(90.0, 1.0, 0.0, 0.0);
+
+        glBegin(GL_QUAD_STRIP);
+        for (i = 0; i <= 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0f);
+            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        for (i = 0; i < 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0f);
+            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        for (i = 0; i < 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0);
+            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+    glPopMatrix();
+
+    // olho direito
+    glPushMatrix();
+        glColor3f(0.01, 0.61, 0.78);
+        glTranslatef(0.01f, 0.01f, 0.025f);
+        glRotatef(90.0, 1.0, 0.0, 0.0);
+
+        glBegin(GL_QUAD_STRIP);
+        for (i = 0; i <= 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0f);
+            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        for (i = 0; i < 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0f);
+            glVertex3f(0.003f * cosf(angulo), 0.0f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        for (i = 0; i < 20; i++) {
+            angulo = (float) (2 * M_PI * i / 20.0);
+            glVertex3f(0.003f * cosf(angulo), 0.005f, 0.003f * sinf(angulo));
+        }
+        glEnd();
+    glPopMatrix();
+
+    // nariz
+    glPushMatrix();
+        glTranslatef(0.001f, 0.0f, 0.03f);
+        glRotatef(30.0, 0.0, 0.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
+        glScalef(0.2, 0.8, 0.2);
+        glutSolidCube(0.008);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(0.0f, -0.003f, 0.03f);
+        glRotatef(90.0, 0.0, 0.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
+        glScalef(0.2, 0.8, 0.2);
+        glutSolidCube(0.008);
+    glPopMatrix();
+
+    // boca
+    glPushMatrix();
+        glTranslatef(-0.009f, -0.012f, 0.027f);
+        glRotatef(30.0, 0.0, 0.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
+        glScalef(0.2, 0.8, 0.2);
+        glutSolidCube(0.008);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(0.0f, -0.014f, 0.027f);
+        glRotatef(90.0, 0.0, 0.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
+        glScalef(0.2, 2.0, 0.2);
+        glutSolidCube(0.008);
+    glPopMatrix();
 
     // pescoco
     glPushMatrix();
@@ -444,7 +549,30 @@ void tronco() {
         // peitoral
         glPushMatrix();
             glutSolidSphere(0.03, 50, 50);
+
+            // estrela no peito
+            glPushMatrix();
+                glTranslatef(0.0f, 0.0f, 0.032f);
+                glScalef(0.05, 0.05, 0.05);
+                glColor3f(1.0f, 1.0f, 1.0f);
+                glEnable(GL_LINE_SMOOTH);
+                glBegin(GL_LINE_LOOP);
+                    glVertex3f(0.0, 0.25, 0.0);
+                    glVertex3f(0.08, 0.1, 0.0);
+                    glVertex3f(0.2, 0.1, 0.0);
+                    glVertex3f(0.1, 0.0, 0.0);
+                    glVertex3f(0.15, -0.15 ,0.0);
+                    glVertex3f(0.0, -0.05, 0.0);
+                    glVertex3f(-0.15, -0.15 ,0.0);
+                    glVertex3f(-0.1, 0.0, 0.0);
+                    glVertex3f(-0.2, 0.1, 0.0);
+                    glVertex3f(-0.08, 0.1, 0.0);
+                glEnd();
+                glDisable(GL_LINE_SMOOTH);
+            glPopMatrix();
         glPopMatrix();
+
+        glColor3f(0.0f, 0.24f, 0.41f);
 
         // asas de maromba
         glPushMatrix();
@@ -466,6 +594,7 @@ void tronco() {
             glBegin(GL_POLYGON);
                 for (i = 0; i < 20; i++) {
                     angulo = (float) (2 * M_PI * i / 20.0f);
+                    if (i < 10) glColor3f(0.72f, 0.0f, 0.0f);
                     glVertex3f(0.015f * cosf(angulo), 0.0f, 0.015f * sinf(angulo));
                 }
             glEnd();
@@ -473,6 +602,7 @@ void tronco() {
             glBegin(GL_POLYGON);
                 for (i = 0; i < 20; i++) {
                     angulo = (float) (2 * M_PI * i / 20.0);
+                    if (i < 10) glColor3f(0.72f, 0.0f, 0.0f);
                     glVertex3f(0.015f * cosf(angulo), 0.1f, 0.015f * sinf(angulo));
                 }
             glEnd();
