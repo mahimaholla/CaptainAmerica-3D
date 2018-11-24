@@ -361,12 +361,13 @@ void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, 
     float angulo; int i;
 
     glPushMatrix();
-        glColor3f(0.0f, 0.02f, 0.31f);
+        glColor3f(0.22, 0.22, 0.22);
         glTranslatef(posX, posY, posZ);
         glRotatef(angX, 1.0, 0.0, 0.0);
         glRotatef(angY, 0.0, 1.0, 0.0);
         glRotatef(angZ, 0.0, 0.0, 1.0);
 
+        // arco externo
         glBegin(GL_QUAD_STRIP);
             for (i = 0; i <= 20; i++) {
                 angulo = (float) (2 * M_PI * i / 20.0f);
@@ -375,6 +376,7 @@ void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, 
             }
         glEnd();
 
+        // face de cima
         glBegin(GL_POLYGON);
             for (i = 0; i < 20; i++) {
                 angulo = (float) (2 * M_PI * i / 20.0f);
@@ -382,12 +384,37 @@ void desenharEscudo(float posX, float posY, float posZ, float angX, float angY, 
             }
         glEnd();
 
+        // face de baixo
         glBegin(GL_POLYGON);
             for (i = 0; i < 20; i++) {
                 angulo = (float) (2 * M_PI * i / 20.0);
                 glVertex3f(0.07f * cosf(angulo), 0.01f, 0.07f * sinf(angulo));
             }
         glEnd();
+
+        // estrela no escudo
+        for (int j = 0; j < 50; j++) {
+            glPushMatrix();
+            glTranslatef(0.0f, 0.02f, -0.01f);
+            glRotatef(90.0, 1.0, 0.0, 0.0);
+            glScalef(0.2f - (j / 100), 0.2f - (j / 100), 0.2f - (j / 100));
+            glColor3f(1.0f, 1.0f, 1.0f);
+            glEnable(GL_LINE_SMOOTH);
+            glBegin(GL_LINE_LOOP);
+                glVertex3f(0.0, 0.25, 0.0);
+                glVertex3f(0.08, 0.1, 0.0);
+                glVertex3f(0.2, 0.1, 0.0);
+                glVertex3f(0.1, 0.0, 0.0);
+                glVertex3f(0.15, -0.15f, 0.0);
+                glVertex3f(0.0, -0.05f, 0.0);
+                glVertex3f(-0.15f, -0.15f, 0.0);
+                glVertex3f(-0.1f, 0.0, 0.0);
+                glVertex3f(-0.2f, 0.1, 0.0);
+                glVertex3f(-0.08f, 0.1, 0.0);
+            glEnd();
+            glDisable(GL_LINE_SMOOTH);
+            glPopMatrix();
+        }
     glPopMatrix();
 }
 
@@ -556,7 +583,7 @@ void tronco() {
                 glScalef(0.05, 0.05, 0.05);
                 glColor3f(1.0f, 1.0f, 1.0f);
                 glEnable(GL_LINE_SMOOTH);
-                glBegin(GL_POLYGON);
+                glBegin(GL_LINE_LOOP);
                     glVertex3f(0.0, 0.25, 0.0);
                     glVertex3f(0.08, 0.1, 0.0);
                     glVertex3f(0.2, 0.1, 0.0);
