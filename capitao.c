@@ -13,9 +13,9 @@ int alturaJanela = 700, larguraJanela = 700;
 
 // flags
 int flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
-int flagMenuOmbroE = 1, flagMenuOmbroD = 1, flagMenuCotoveloE = 0, flagMenuCotoveloD = 0, flagMenuCoxaE = 0,
+int flagMenuOmbroE = 0, flagMenuOmbroD = 0, flagMenuCotoveloE = 0, flagMenuCotoveloD = 0, flagMenuCoxaE = 0,
 flagMenuCoxaD = 0, flagMenuCanelaE = 0, flagMenuCanelaD = 0, flagMenuCabeca = 0;
-int flagAnimSecundaria = 0;
+int flagAnimSecundaria = 0, flagEncerrar = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0, planoTextura[] = {1.0f, 0.0f, 0.0f, 0.0f};
 
@@ -180,11 +180,16 @@ void getBitmapImageData(char *pFileName, BMPImage *pImage) {
 
     fseek(pFile, 18, SEEK_CUR);
 
-    if((i = fread(&pImage->width, 4, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read width from %s.\n ", pFileName);
-    if((i = fread(&pImage->height, 4, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read height from %s.\n ", pFileName);
-    if((fread(&nNumPlanes, 2, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read plane count from %s.\n", pFileName);
-    if(nNumPlanes != 1) printf("ERROR: getBitmapImageData - Plane count from %s.\n ", pFileName);
-    if((i = fread(&nNumBPP, 2, 1, pFile)) != 1) printf( "ERROR: getBitmapImageData - Couldn't read BPP from %s.\n ", pFileName);
+    if((i = fread(&pImage->width, 4, 1, pFile)) != 1)
+        printf("ERROR: getBitmapImageData - Couldn't read width from %s.\n ", pFileName);
+    if((i = fread(&pImage->height, 4, 1, pFile)) != 1)
+        printf("ERROR: getBitmapImageData - Couldn't read height from %s.\n ", pFileName);
+    if((fread(&nNumPlanes, 2, 1, pFile)) != 1)
+        printf("ERROR: getBitmapImageData - Couldn't read plane count from %s.\n", pFileName);
+    if(nNumPlanes != 1)
+        printf("ERROR: getBitmapImageData - Plane count from %s.\n ", pFileName);
+    if((i = fread(&nNumBPP, 2, 1, pFile)) != 1)
+        printf( "ERROR: getBitmapImageData - Couldn't read BPP from %s.\n ", pFileName);
     if(nNumBPP != 24) printf("ERROR: getBitmapImageData - BPP from %s.\n ", pFileName);
 
     fseek(pFile, 24, SEEK_CUR);
@@ -192,7 +197,8 @@ void getBitmapImageData(char *pFileName, BMPImage *pImage) {
     int nTotalImagesize = (pImage->width * pImage->height) * 3;
     pImage->data = (char*) malloc(nTotalImagesize);
 
-    if((i = fread(pImage->data, nTotalImagesize, 1, pFile)) != 1) printf("ERROR: getBitmapImageData - Couldn't read image data from %s.\n ", pFileName);
+    if((i = fread(pImage->data, nTotalImagesize, 1, pFile)) != 1)
+        printf("ERROR: getBitmapImageData - Couldn't read image data from %s.\n ", pFileName);
 
     char charTemp;
     for(i = 0; i < nTotalImagesize; i += 3) {
@@ -1744,8 +1750,8 @@ void leituraSetas(int tecla) {
 
             // girar cotovelo direito
             if (flagMenuCotoveloD == 1) {
-                if (anguloCotoveloD > -90)
-                    anguloCotoveloD -= 2;
+                if (anguloCotoveloD < 90)
+                    anguloCotoveloD += 2;
             }
 
             // girar coxa esquerda
@@ -1800,8 +1806,8 @@ void leituraSetas(int tecla) {
 
             // girar cotovelo direito
             if (flagMenuCotoveloD == 1) {
-                if (anguloCotoveloD < 0)
-                    anguloCotoveloD += 2;
+                if (anguloCotoveloD > 0)
+                    anguloCotoveloD -= 2;
             }
 
             // girar coxa esquerda
@@ -1856,8 +1862,8 @@ void leituraSetas(int tecla) {
 
             // girar cotovelo direito
             if (flagMenuCotoveloD == 1) {
-                if (anguloCotoveloD > -90)
-                    anguloCotoveloD -= 2;
+                if (anguloCotoveloD < 90)
+                    anguloCotoveloD += 2;
             }
 
             // girar coxa esquerda
@@ -1912,8 +1918,8 @@ void leituraSetas(int tecla) {
 
             // girar cotovelo direito
             if (flagMenuCotoveloD == 1) {
-                if (anguloCotoveloD < 0)
-                    anguloCotoveloD += 2;
+                if (anguloCotoveloD > 0)
+                    anguloCotoveloD -= 2;
             }
 
             // girar coxa esquerda
@@ -1968,7 +1974,147 @@ void criarEscudo(int botao, int estado) {
 
 /* MENU DE OPCOES */
 void menuOpcoes(GLint opcaoMenu) {
+    switch (opcaoMenu) {
+        case 1:   // fazer flexoes
+            flagAnimSecundaria = 1;
+            break;
 
+        case 2:   // encerrar flexoes
+            break;
+
+        case 3:   // ir para o centro
+            break;
+
+        case 4:   // resetar movimentacoes individuais
+            flagMenuCabeca = 0;
+            flagMenuCanelaD = 0;
+            flagMenuCanelaE = 0;
+            flagMenuCoxaD = 0;
+            flagMenuCoxaE = 0;
+            flagMenuCotoveloD = 0;
+            flagMenuCotoveloE = 0;
+            flagMenuOmbroD = 0;
+            flagMenuOmbroE = 0;
+            break;
+
+        case 5:   // voltar ao jogo
+            break;
+
+        case 6:   // mexer cabeca
+            flagMenuCabeca = 1;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 7:   // mexer ombro esquerdo
+            flagMenuOmbroE = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            break;
+
+        case 8:   // mexer ombro direito
+            flagMenuOmbroD = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 9:   // mexer cotovelo esquerdo
+            flagMenuCotoveloE = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 10:   // mexer cotovelo direito
+            flagMenuCotoveloD = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 11:   // mexer coxa esquerda
+            flagMenuCoxaE = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 12:   // mexer coxa direita
+            flagMenuCoxaD = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 13:   // mexer joelho esquerdo
+            flagMenuCanelaE = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaD == 1) flagMenuCanelaD = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 14:   // mexer joelho direito
+            flagMenuCanelaD = 1;
+            if (flagMenuCabeca == 1) flagMenuCabeca = 2;
+            if (flagMenuCanelaE == 1) flagMenuCanelaE = 2;
+            if (flagMenuCoxaD == 1) flagMenuCoxaD = 2;
+            if (flagMenuCoxaE == 1) flagMenuCoxaE = 2;
+            if (flagMenuCotoveloD == 1) flagMenuCotoveloD = 2;
+            if (flagMenuCotoveloE == 1) flagMenuCotoveloE = 2;
+            if (flagMenuOmbroD == 1) flagMenuOmbroD = 2;
+            if (flagMenuOmbroE == 1) flagMenuOmbroE = 2;
+            break;
+
+        case 15:   // sair
+            flagEncerrar = 1;
+            exit(0);
+
+        default:
+            break;
+    }
 }
 
 /* FUNCAO PRINCIPAL */
@@ -1990,6 +2136,25 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(desenharCenaCompleta);
     glutTimerFunc(10, caminhadaPersonagem, 0);
     iluminarCenario();
+
+    glutCreateMenu(menuOpcoes);
+        glutAddMenuEntry("Fazer Flexoes", 1);
+        glutAddMenuEntry("Encerrar Flexoes", 2);
+        glutAddMenuEntry("Ir para o Centro", 3);
+        glutAddMenuEntry("Resetar Movimentacoes Individuais", 4);
+        glutAddMenuEntry("Voltar ao Jogo", 5);
+        glutAddMenuEntry("Mexer Cabeca", 6);
+        glutAddMenuEntry("Mexer Ombro Esquerdo", 7);
+        glutAddMenuEntry("Mexer Ombro Direito", 8);
+        glutAddMenuEntry("Mexer Cotovelo Esquerdo", 9);
+        glutAddMenuEntry("Mexer Cotovelo Direito", 10);
+        glutAddMenuEntry("Mexer Coxa Esquerda", 11);
+        glutAddMenuEntry("Mexer Coxa Direita", 12);
+        glutAddMenuEntry("Mexer Joelho Esquerdo", 13);
+        glutAddMenuEntry("Mexer Joelho Direito", 14);
+        glutAddMenuEntry("Sair", 15);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
     glutMainLoop();
     return 0;
 }
