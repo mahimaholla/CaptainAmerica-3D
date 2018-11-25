@@ -14,8 +14,8 @@ int alturaJanela = 700, larguraJanela = 700;
 // flags
 int flagCaminhada = 0, flagImpulso = 0, flagEscudo = 0, flagJogar = 0;
 int flagMenuOmbroE = 0, flagMenuOmbroD = 0, flagMenuCotoveloE = 0, flagMenuCotoveloD = 0, flagMenuCoxaE = 0,
-flagMenuCoxaD = 0, flagMenuCanelaE = 0, flagMenuCanelaD = 0, flagMenuCabeca = 0;
-int flagAnimSecundaria = 0, flagEncerrar = 0;
+flagMenuCoxaD = 0, flagMenuCanelaE = 0, flagMenuCanelaD = 0, flagMenuCabeca = 0, flagMenuCentro = 0;
+int flagAnimSecundaria = 0, flagIniciarFlexao = 0, flagEncerrarFlexao = 0, flagDeitar = 0, flagCentro = 0;
 
 GLfloat correcaoAspecto, anguloProjecao = 45.0, planoTextura[] = {1.0f, 0.0f, 0.0f, 0.0f};
 
@@ -26,18 +26,18 @@ float anguloCenaX = 0.0f, anguloCenaY = 0.0f, anguloCenaZ = 0.0f;
 
 // personagem
 float posicaoPersonagemX = -1.06f, posicaoPersonagemY = 0.0f, posicaoPersonagemZ = -0.15f,
-rotacaoPersonagem = 90.0f, velPersonagem = 0.004, rotacaoCabeca = 0.0f;
+rotacaoPersonagem = 90.0f, velPersonagem = 0.004, rotacaoCabeca = 0.0f, anguloFlexao = 0.0f;
 float anguloCoxaE = 0.0f, anguloCoxaD = 0.0f, anguloCanelaE = 0.0f, anguloCanelaD = 45.0f, auxCoxaE = 2.0f,
 auxCoxaD = 2.0f, auxCanelaE = 2.0f, auxCanelaD = 2.0f, anguloOmbroE = 0.0f, anguloOmbroD = 0.0f,
 anguloCotoveloE = 90.0f, anguloCotoveloD = 0.0f, auxOmbroE = 2.0f, auxOmbroD = 2.0f, auxCotoveloE = 2.0f,
 auxCotoveloD = 2.0f, inicialCanelaD = 0.0f, inicialCanelaE = 0.0f, inicialCotoveloD = 0.0f, inicialCotoveloE = 0.0f,
 inicialCoxaD = 0.0f, inicialCoxaE = 0.0f, inicialOmbroD = 0.0f, inicialOmbroE = 0.0f,
-impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, menuCanelaD = 0.0f, menuCotoveloE = 0.0f;
+impulsoCotoveloE = 0.0f, impulsoOmbroE = 0.0f, menuCanelaD = 0.0f, menuCotoveloE = 0.0f, flexaoOmbroD = 0.0f,
+flexaoOmbroE = 0.0f, flexaoCotoveloD = 0.0f, flexaoCotoveloE = 0.0f;
 
 // outros objetos
 float escudoX, escudoY = -0.3f, escudoZ, rotacaoVoandoX = 0.0f, escudoVoandoX = 0.0f;
 float anguloPorta = 0.0f, posicaoMaoX = 0.0f, posicaoMaoY = 0.0f, posicaoMaoZ = 0.0f;
-
 
 /* PROJECAO PERSPECTIVA */
 void ProjecaoCena() {
@@ -228,6 +228,25 @@ enum maqPersonagem {
     SaindoCasa,
     ForaCasa
 } estadoPersonagem;
+
+/* MAQUINA DE ESTADOS PARA A ANIMACAO SECUNDARIA */
+enum maqSecundaria {
+    SecPronto,
+    SecIdaX,
+    SecDeitando,
+    SecFlexaoBaixo,
+    SecFlexaoCima,
+    SecLevantar,
+    SecMeiaVolta,
+    SecVoltar
+} estadoSecundario;
+
+/* MAQUINA DE ESTADOS PARA MOVER AO CENTRO */
+enum maqCentro {
+    CentroPronto,
+    CentroIdaX,
+    CentroMeiaVolta
+} estadoCentro;
 
 /* CONTROLE DO PERSONAGEM NA ANIMACAO */
 void controlePersonagem(void) {
@@ -423,6 +442,142 @@ const char* obterEstado(enum maqPersonagem estado) {
             return "SaindoCasa";
         case ForaCasa:
             return "ForaCasa";
+    }
+}
+
+/* CONTROLE DA ANIMACAO SECUNDARIA */
+void controleSecundaria(void) {
+    switch (estadoSecundario) {
+        case SecPronto:
+            if (flagAnimSecundaria && flagIniciarFlexao) estadoSecundario = SecIdaX;
+            break;
+
+        case SecIdaX:
+            flagCaminhada = 1;
+            if (posicaoPersonagemX <= 0.15f) posicaoPersonagemX += velPersonagem;
+            else estadoSecundario = SecDeitando;
+            break;
+
+        case SecDeitando:
+            flagDeitar = 1; flagCaminhada = 0;
+            if (anguloFlexao < 65) {
+                anguloFlexao += 1;
+                flexaoOmbroD -= 1;
+                flexaoOmbroE -= 1;
+            } else estadoSecundario = SecFlexaoBaixo;
+            break;
+
+        case SecFlexaoBaixo:
+            if (anguloFlexao < 80) {
+                anguloFlexao += 0.5;
+                flexaoOmbroD += 1;
+                flexaoOmbroE += 1;
+                if (flexaoCotoveloD > -100) flexaoCotoveloD -= 2.25;
+                if (flexaoCotoveloE > -100) flexaoCotoveloE -= 2.25;
+            } else estadoSecundario = SecFlexaoCima;
+            break;
+
+        case SecFlexaoCima:
+            if (anguloFlexao > 65) {
+                anguloFlexao -= 0.5;
+                flexaoOmbroD -= 1;
+                flexaoOmbroE -= 1;
+                if (flexaoCotoveloD < 0) flexaoCotoveloD += 2.25;
+                if (flexaoCotoveloE < 0) flexaoCotoveloE += 2.25;
+            }
+            else if (flagEncerrarFlexao) estadoSecundario = SecLevantar;
+            else estadoSecundario = SecFlexaoBaixo;
+            break;
+
+        case SecLevantar:
+            if (anguloFlexao > 0) {
+                anguloFlexao -= 1;
+                flexaoOmbroD += 1;
+                flexaoOmbroE += 1;
+            }
+            else estadoSecundario = SecMeiaVolta;
+            break;
+
+        case SecMeiaVolta:
+            flagCaminhada = 1; flagDeitar = 0;
+            if (rotacaoPersonagem < 270.0f) rotacaoPersonagem += (velPersonagem * 500);
+            else estadoSecundario = SecVoltar;
+            break;
+
+        case SecVoltar:
+            if (posicaoPersonagemX > -1.06f) posicaoPersonagemX -= velPersonagem;
+            else if (rotacaoPersonagem > 90.0f) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                flagCaminhada = 0;
+                flagAnimSecundaria = 0;
+                estadoSecundario = SecPronto;
+            }
+            break;
+    }
+}
+
+const char* obterEstadoSecundario(enum maqSecundaria estadoSec) {
+    switch (estadoSec) {
+        case SecPronto:
+            return "SecPronto";
+        case SecIdaX:
+            return "SecIdaX";
+        case SecDeitando:
+            return "SecDeitando";
+        case SecFlexaoBaixo:
+            return "SecFlexaoBaixo";
+        case SecFlexaoCima:
+            return "SecFlexaoCima";
+        case SecLevantar:
+            return "SecLevantar";
+        case SecMeiaVolta:
+            return "SecMeiaVolta";
+        case SecVoltar:
+            return "SecVoltar";
+    }
+}
+
+void controleCentro(void) {
+    switch (estadoCentro) {
+        case CentroPronto:
+            if (flagMenuCentro && flagCentro) estadoCentro = CentroIdaX;
+            break;
+
+        case CentroIdaX:
+            flagCaminhada = 1;
+            if (posicaoPersonagemX < 0.0) posicaoPersonagemX += velPersonagem;
+            else estadoCentro = CentroMeiaVolta;
+            break;
+
+        case CentroMeiaVolta:
+            printf("Rotacao em %lf\n", rotacaoPersonagem);
+            if (rotacaoPersonagem > 0.0) rotacaoPersonagem -= (velPersonagem * 500);
+            else {
+                flagCaminhada = 0;
+                anguloOmbroD = 0.0f;
+                anguloOmbroE = 0.0f;
+                anguloCotoveloD = 0.0f;
+                anguloCotoveloE = 0.0f;
+                anguloCoxaD = 0.0f;
+                anguloCoxaE = 0.0f;
+                anguloCanelaD = 0.0f;
+                anguloCanelaE = 0.0f;
+                flagCentro = 0;
+                flagMenuCentro = 0;
+                estadoCentro = CentroPronto;
+            }
+            break;
+    }
+}
+
+const char* obterEstadoCentro(enum maqCentro estadoCentro) {
+    switch (estadoCentro) {
+        case CentroPronto:
+            return "CentroPronto";
+        case CentroIdaX:
+            return "CentroIdaX";
+        case CentroMeiaVolta:
+            return "CentroMeiaVolta";
     }
 }
 
@@ -885,7 +1040,8 @@ void bracoDireito() {
             glColor3f(0.0f, 0.24f, 0.41f);
             glTranslatef(0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
-            if (flagCaminhada || (flagMenuOmbroD != 0)) glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
+            if (flagDeitar) glRotatef(flexaoOmbroD, 1.0, 0.0, 0.0);
+            else if (flagCaminhada || (flagMenuOmbroD != 0)) glRotatef(anguloOmbroD, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroD, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -921,7 +1077,8 @@ void bracoDireito() {
                 glColor3f(0.72f, 0.0f, 0.0f);
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
-                if (flagCaminhada || (flagMenuCotoveloD != 0)) glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
+                if (flagDeitar) glRotatef(flexaoCotoveloD, 1.0, 0.0, 0.0);
+                else if (flagCaminhada || (flagMenuCotoveloD != 0)) glRotatef(-anguloCotoveloD, 1.0, 0.0, 0.0);
                 else glRotatef(inicialCotoveloD, 1.0, 0.0, 0.0);
                 glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -968,7 +1125,8 @@ void bracoEsquerdo() {
             glTranslatef(-0.035f, -0.11f, 0.0f);
             glTranslatef(0.0f, 0.04f, 0.0f);
             if (flagImpulso) glRotatef(impulsoOmbroE, 1.0, 0.0, 0.0);
-            else if (flagCaminhada || (flagMenuOmbroE != 0)) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
+            else if (flagDeitar) glRotatef(flexaoOmbroE, 1.0, 0.0, 0.0);
+            else if (flagCaminhada || (flagMenuOmbroE != 0) || flagDeitar) glRotatef(anguloOmbroE, 1.0, 0.0, 0.0);
             else glRotatef(inicialOmbroE, 1.0, 0.0, 0.0);
             glTranslatef(0.0f, -0.04f, 0.0f);
 
@@ -1005,6 +1163,7 @@ void bracoEsquerdo() {
                 glTranslatef(0.0f, -0.04f, 0.0f);
                 glTranslatef(0.0f, 0.04f, 0.0f);
                 if (flagImpulso) glRotatef(impulsoCotoveloE, 1.0, 0.0, 0.0);
+                else if (flagDeitar) glRotatef(flexaoCotoveloE, 1.0, 0.0, 0.0);
                 else if (flagMenuCotoveloE != 0) glRotatef(menuCotoveloE, 1.0, 0.0, 0.0);
                 else if (flagCaminhada) glRotatef(-anguloCotoveloE, 1.0, 0.0, 0.0);
                 else glRotatef(-inicialCotoveloE, 1.0, 0.0, 0.0);
@@ -1218,6 +1377,12 @@ void desenharPersonagem() {
         glTranslatef(0.0f, posicaoPersonagemY, 0.0f);
         glTranslatef(0.0f, 0.0f, posicaoPersonagemZ);
         glRotatef(rotacaoPersonagem, 0.0, 1.0, 0.0);
+
+        if (flagDeitar) {
+            glTranslatef(0.0f, -0.25f, 0.0f);
+            glRotatef(anguloFlexao, 1.0, 0.0, 0.0);
+            glTranslatef(0.0f, 0.25f, 0.0f);
+        }
 
         cabeca();
         tronco();
@@ -1616,8 +1781,11 @@ void desenharCenaCompleta() {
         desenharPersonagem();
     glPopMatrix();
 
-    controlePersonagem();
-    // printf("%s\n", obterEstado(estadoPersonagem));
+    if (flagAnimSecundaria) controleSecundaria();
+    else if (flagMenuCentro) controleCentro();
+    else controlePersonagem();
+
+    printf("%s\n", obterEstadoCentro(estadoCentro));
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -1668,6 +1836,14 @@ void leituraTeclado(unsigned char tecla) {
             break;
         case 'F':   // aumentar angulo da cena em Y
             anguloCenaY += 2;
+            break;
+
+        case 'L':
+            anguloFlexao += 2;
+            break;
+
+        case 'l':
+            anguloFlexao -= 2;
             break;
 
         default:
@@ -1977,12 +2153,17 @@ void menuOpcoes(GLint opcaoMenu) {
     switch (opcaoMenu) {
         case 1:   // fazer flexoes
             flagAnimSecundaria = 1;
+            flagIniciarFlexao = 1;
             break;
 
         case 2:   // encerrar flexoes
+            flagEncerrarFlexao = 1;
+            flagIniciarFlexao = 0;
             break;
 
         case 3:   // ir para o centro
+            flagMenuCentro = 1;
+            flagCentro = 1;
             break;
 
         case 4:   // resetar movimentacoes individuais
@@ -1998,6 +2179,25 @@ void menuOpcoes(GLint opcaoMenu) {
             break;
 
         case 5:   // voltar ao jogo
+            flagMenuCabeca = 0;
+            flagMenuCanelaD = 0;
+            flagMenuCanelaE = 0;
+            flagMenuCoxaD = 0;
+            flagMenuCoxaE = 0;
+            flagMenuCotoveloD = 0;
+            flagMenuCotoveloE = 0;
+            flagMenuOmbroD = 0;
+            flagMenuOmbroE = 0;
+            flagAnimSecundaria = 0;
+            flagCaminhada = 0;
+            flagIniciarFlexao = 0;
+            flagEncerrarFlexao = 0;
+            flagDeitar = 0;
+
+            posicaoPersonagemX = -1.06f;
+            posicaoPersonagemY = 0.0f;
+            posicaoPersonagemZ = -0.15f;
+            rotacaoPersonagem = 90.0f;
             break;
 
         case 6:   // mexer cabeca
@@ -2109,7 +2309,6 @@ void menuOpcoes(GLint opcaoMenu) {
             break;
 
         case 15:   // sair
-            flagEncerrar = 1;
             exit(0);
 
         default:
