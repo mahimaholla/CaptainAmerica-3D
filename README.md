@@ -7,5 +7,3 @@ Animação 3D em OpenGL, como projeto final da disciplina de Computação Gráfi
     2. -lglut
     3. -lGLU
     4. -lm
-- Existem algumas opções disponíveis no teclado, para movimentar a câmera e a cena. Depois coloco uma tabela deles aqui.
-- Para movimentação do personagem, ação padrão e outras opções, haverá um menu no botão direito do mouse.
