@@ -1,4 +1,4 @@
-The system is: Linux - 4.15.0-38-generic - x86_64
+The system is: Linux - 4.15.0-39-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -15,28 +15,28 @@ The C compiler identification is GNU, found in "/home/anajbellini/CLionProjects/
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2edcc/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2edcc.dir/build.make CMakeFiles/cmTC_2edcc.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_cedb9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_cedb9.dir/build.make CMakeFiles/cmTC_cedb9.dir/build
 make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2edcc.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_2edcc.dir/testCCompiler.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_2edcc
-/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2edcc.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_2edcc.dir/testCCompiler.c.o  -o cmTC_2edcc 
+Building C object CMakeFiles/cmTC_cedb9.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_cedb9.dir/testCCompiler.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_cedb9
+/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cedb9.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_cedb9.dir/testCCompiler.c.o  -o cmTC_cedb9 
 make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ce26a/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ce26a.dir/build.make CMakeFiles/cmTC_ce26a.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_15b53/fast"
+/usr/bin/make -f CMakeFiles/cmTC_15b53.dir/build.make CMakeFiles/cmTC_15b53.dir/build
 make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o   -c /home/anajbellini/Softwares/CLion/bin/cmake/linux/share/cmake-3.12/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_ce26a
-/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce26a.dir/link.txt --verbose=1
-/usr/bin/cc     -v CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o  -o cmTC_ce26a 
+Building C object CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o   -c /home/anajbellini/Softwares/CLion/bin/cmake/linux/share/cmake-3.12/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_15b53
+/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15b53.dir/link.txt --verbose=1
+/usr/bin/cc     -v CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o  -o cmTC_15b53 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -48,9 +48,9 @@ Thread model: posix
 gcc version 7.3.0 (Ubuntu 7.3.0-27ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ce26a' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHjZ3SO.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_ce26a /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ce26a' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_15b53' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXyFdZ9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_15b53 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_15b53' '-mtune=generic' '-march=x86-64'
 make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -58,14 +58,14 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_ce26a/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_ce26a.dir/build.make CMakeFiles/cmTC_ce26a.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_15b53/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_15b53.dir/build.make CMakeFiles/cmTC_15b53.dir/build]
   ignore line: [make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o   -c /home/anajbellini/Softwares/CLion/bin/cmake/linux/share/cmake-3.12/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_ce26a]
-  ignore line: [/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce26a.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o  -o cmTC_ce26a ]
+  ignore line: [Building C object CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o   -c /home/anajbellini/Softwares/CLion/bin/cmake/linux/share/cmake-3.12/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_15b53]
+  ignore line: [/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15b53.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o  -o cmTC_15b53 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -77,13 +77,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 7.3.0 (Ubuntu 7.3.0-27ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ce26a' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHjZ3SO.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_ce26a /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_15b53' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXyFdZ9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_15b53 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccHjZ3SO.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccXyFdZ9.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -102,7 +102,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_ce26a] ==> ignore
+    arg [cmTC_15b53] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -114,7 +114,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_ce26a.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_15b53.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -146,14 +146,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_52f33/fast"
-/usr/bin/make -f CMakeFiles/cmTC_52f33.dir/build.make CMakeFiles/cmTC_52f33.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_8a286/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8a286.dir/build.make CMakeFiles/cmTC_8a286.dir/build
 make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_52f33.dir/feature_tests.c.o
-/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_52f33.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_52f33
-/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52f33.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_52f33.dir/feature_tests.c.o  -o cmTC_52f33 
+Building C object CMakeFiles/cmTC_8a286.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_8a286.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_8a286
+/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a286.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_8a286.dir/feature_tests.c.o  -o cmTC_8a286 
 make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -166,14 +166,14 @@ make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_dc31e/fast"
-/usr/bin/make -f CMakeFiles/cmTC_dc31e.dir/build.make CMakeFiles/cmTC_dc31e.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_31848/fast"
+/usr/bin/make -f CMakeFiles/cmTC_31848.dir/build.make CMakeFiles/cmTC_31848.dir/build
 make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_dc31e.dir/feature_tests.c.o
-/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_dc31e.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_dc31e
-/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dc31e.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_dc31e.dir/feature_tests.c.o  -o cmTC_dc31e 
+Building C object CMakeFiles/cmTC_31848.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_31848.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_31848
+/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_31848.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_31848.dir/feature_tests.c.o  -o cmTC_31848 
 make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -186,14 +186,14 @@ make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_a2543/fast"
-/usr/bin/make -f CMakeFiles/cmTC_a2543.dir/build.make CMakeFiles/cmTC_a2543.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_039ef/fast"
+/usr/bin/make -f CMakeFiles/cmTC_039ef.dir/build.make CMakeFiles/cmTC_039ef.dir/build
 make[1]: Entering directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a2543.dir/feature_tests.c.o
-/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_a2543.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_a2543
-/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a2543.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_a2543.dir/feature_tests.c.o  -o cmTC_a2543 
+Building C object CMakeFiles/cmTC_039ef.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_039ef.dir/feature_tests.c.o   -c /home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_039ef
+/home/anajbellini/Softwares/CLion/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_039ef.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_039ef.dir/feature_tests.c.o  -o cmTC_039ef 
 make[1]: Leaving directory '/home/anajbellini/CLionProjects/ComputacaoGraficaAJB/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
