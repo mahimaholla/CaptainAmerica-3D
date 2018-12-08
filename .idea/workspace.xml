@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="ComputacaoGraficaAJB" targetName="ComputacaoGraficaAJB" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2c933020-6c6c-48ad-8be6-3128916be1ee" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/capitao.c" beforeDir="false" afterPath="$PROJECT_DIR$/capitao.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ComputacaoGraficaAJB.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ComputacaoGraficaAJB.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/capitao.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="24396">
+              <caret line="1780" column="30" selection-start-line="1780" selection-start-column="30" selection-end-line="1780" selection-end-column="30" />
+              <folding>
+                <element signature="e#98#118#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/textures/grama.bmp">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="162">
+                <caret line="9" selection-start-line="9" selection-end-line="9" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>proximaTora</find>
+      <find>novaTora</find>
+      <find>escudoY</find>
+      <find>desenharEscudo</find>
+      <find>rotacaoEspecialX</find>
+      <find>posicaoEscudoX</find>
+      <find>rotacaoEscudoX</find>
+      <find>high_shininess</find>
+      <find>grama</find>
+      <find>ARVORE</find>
+      <find>CENTRO</find>
+      <find>ProjecaoCena</find>
+      <find>peito</find>
+      <find>estrela</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>proximoEscudo</replace>
+      <replace>novoEscudo</replace>
+      <replace>rotacaoSubindoX</replace>
+      <replace>rotacaoVoandoX</replace>
+      <replace>grauEspecularidade</replace>
+      <replace>projecaoCena</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/capitao.c" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/lenhador.c" />
+        <option value="$PROJECT_DIR$/report/linguica.txt" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/capitao.c" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="25" />
+    <option name="width" value="663" />
+    <option name="height" value="743" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ComputacaoGraficaAJB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ComputacaoGraficaAJB" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ComputacaoGraficaAJB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ComputacaoGraficaAJB" type="462c0819:PsiDirectoryNode" />
+              <item name="report" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CG_Textura" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.ComputacaoGraficaAJB">
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ComputacaoGraficaAJB" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ComputacaoGraficaAJB" TARGET_NAME="ComputacaoGraficaAJB" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ComputacaoGraficaAJB" RUN_TARGET_NAME="ComputacaoGraficaAJB">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Build All" />
+      <item itemvalue="Application.ComputacaoGraficaAJB" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="4" Folder0="$USER_HOME$/JetbrainsDict" Folder1="$USER_HOME$/JetbrainsDict" Folder2="$USER_HOME$/JetbrainsDict" Folder3="$USER_HOME$/JetbrainsDict" CustomDictionaries="4" CustomDictionary0="$USER_HOME$/JetbrainsDict/portuguese-brazil.dic" CustomDictionary1="$USER_HOME$/JetbrainsDict/portuguese-brazil_technical-terms.dic" CustomDictionary2="$USER_HOME$/JetbrainsDict/portuguese-brazil_technical-terms_without-accents.dic" CustomDictionary3="$USER_HOME$/JetbrainsDict/portuguese-brazil_without-accents.dic" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="project-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2c933020-6c6c-48ad-8be6-3128916be1ee" name="Default Changelist" comment="" />
+      <created>1540928869936</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1540928869936</updated>
+      <workItem from="1540928873561" duration="1110000" />
+      <workItem from="1540937305689" duration="3812000" />
+      <workItem from="1541037797896" duration="157000" />
+      <workItem from="1541077904418" duration="7000" />
+      <workItem from="1541171064342" duration="646000" />
+      <workItem from="1541179220819" duration="10372000" />
+      <workItem from="1541192221133" duration="18523000" />
+      <workItem from="1541357269582" duration="5943000" />
+      <workItem from="1541434910705" duration="598000" />
+      <workItem from="1541442403144" duration="1095000" />
+      <workItem from="1541515995115" duration="6517000" />
+      <workItem from="1541526526113" duration="4553000" />
+      <workItem from="1541536512325" duration="8545000" />
+      <workItem from="1541639279436" duration="2556000" />
+      <workItem from="1541643017437" duration="2679000" />
+      <workItem from="1541695642223" duration="1379000" />
+      <workItem from="1541697418258" duration="5847000" />
+      <workItem from="1541703396657" duration="792000" />
+      <workItem from="1541712287794" duration="4452000" />
+      <workItem from="1542551648892" duration="44000" />
+      <workItem from="1542551739705" duration="629000" />
+      <workItem from="1542724188128" duration="13550000" />
+      <workItem from="1542743029576" duration="2555000" />
+      <workItem from="1542748732834" duration="2326000" />
+      <workItem from="1542752604524" duration="1912000" />
+      <workItem from="1542808085210" duration="40460000" />
+      <workItem from="1542900280523" duration="309000" />
+      <workItem from="1542900895560" duration="439000" />
+      <workItem from="1542901508031" duration="1178000" />
+      <workItem from="1542904345510" duration="245000" />
+      <workItem from="1542910156535" duration="599000" />
+      <workItem from="1542925291458" duration="506000" />
+      <workItem from="1542981346515" duration="28419000" />
+      <workItem from="1543022348998" duration="10469000" />
+      <workItem from="1543061836438" duration="4033000" />
+      <workItem from="1543066278773" duration="627000" />
+      <workItem from="1543068247054" duration="911000" />
+      <workItem from="1543079483989" duration="13285000" />
+      <workItem from="1543099499351" duration="3852000" />
+      <workItem from="1543107388562" duration="4076000" />
+      <workItem from="1543795886683" duration="13000" />
+      <workItem from="1543795944130" duration="56000" />
+      <workItem from="1543796056968" duration="166000" />
+      <workItem from="1544181677773" duration="1237000" />
+      <workItem from="1544183750340" duration="765000" />
+      <workItem from="1544229646718" duration="2214000" />
+      <workItem from="1544233360427" duration="4709000" />
+      <workItem from="1544238848272" duration="4671000" />
+      <workItem from="1544270413109" duration="35000" />
+      <workItem from="1544270495376" duration="1145000" />
+      <workItem from="1544272595512" duration="3403000" />
+    </task>
+    <task id="LOCAL-00001" summary="Arquivo inicializado com OpenGL">
+      <created>1540929086213</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1540929086214</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Tarefas adicionadas">
+      <created>1540929569871</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1540929569871</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Projeção e Reshape (ainda não testados)">
+      <created>1540941453747</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1540941453747</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Projeção, fundo e movimentações da câmera prontos">
+      <created>1541183744990</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1541183744990</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Cenário e personagem iniciados">
+      <created>1541189585058</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1541189585058</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Iluminação pronta">
+      <created>1541365245736</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1541365245736</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fila de escudos pronta">
+      <created>1541702661939</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1541702661939</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Código organizado">
+      <created>1541704073769</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1541704073769</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Casa 80% pronta">
+      <created>1542741808425</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1542741808425</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Casa 90% pronta, falta o telhado">
+      <created>1542754389765</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1542754389765</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Casa pronta e escudo redesenhado">
+      <created>1542822161505</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1542822161506</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Área dos escudos delimitada">
+      <created>1542823731197</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1542823731197</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Máquina de estados iniciada">
+      <created>1542835364397</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1542835364397</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Caminhada até o escudo funcionando">
+      <created>1542843401552</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1542843401552</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Impulso na metade">
+      <created>1542852119511</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1542852119511</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Movimento do Capitão América pronto (\o/)">
+      <created>1542858051519</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1542858051519</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Pasta do relatório criada e README atualizado">
+      <created>1542859385757</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1542859385757</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Movimento do escudo pronto \o/ \o/ \o/ \o/ \o/">
+      <created>1543001632603</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1543001632603</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Limpeza do código + pasta de texturas">
+      <created>1543020427087</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1543020427087</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Rosto e cabelo prontos">
+      <created>1543028740618</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1543028740618</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Roupa do Capitão América pronta">
+      <created>1543030437487</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1543030437487</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Escudo redesenhado">
+      <created>1543032773591</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1543032773591</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Textura adicionada na grama (falta arrumar)">
+      <created>1543068539521</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1543068539521</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Movimentos individuais das partes do humanoide">
+      <created>1543093046339</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1543093046341</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Versão semifinal, aguardando últimos ajustes">
+      <created>1543111437902</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1543111437902</updated>
+    </task>
+    <task id="LOCAL-00026" summary="CÓDIGO FINALIZADO">
+      <created>1544243455635</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1544243455636</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="228421000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16465257" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48413897" weight="0.3548922" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924472" weight="0.39800996" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49924472" weight="0.32669982" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49924472" weight="0.32867134" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51586103" side_tool="true" weight="0.3548922" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49848944" weight="0.3416252" />
+      <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.49773413" weight="0.32550335" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.48640484" weight="0.2819237" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Projeção e Reshape (ainda não testados)" />
+    <MESSAGE value="Projeção pronta, fundo pintado, movimentações da câmera prontas" />
+    <MESSAGE value="Projeção, fundo e movimentações da câmera prontos" />
+    <MESSAGE value="Cenário e personagem iniciados" />
+    <MESSAGE value="Iluminação pronta" />
+    <MESSAGE value="Fila de escudos pronta" />
+    <MESSAGE value="Código organizado" />
+    <MESSAGE value="Casa 80% pronta" />
+    <MESSAGE value="Casa 90% pronta, falta o telhado" />
+    <MESSAGE value="Casa pronta e escudo redesenhado" />
+    <MESSAGE value="Área dos escudos delimitada" />
+    <MESSAGE value="Máquina de estados iniciada" />
+    <MESSAGE value="Caminhada até o escudo funcionando" />
+    <MESSAGE value="Impulso na metade" />
+    <MESSAGE value="Movimento do Capitão América pronto (\o/)" />
+    <MESSAGE value="Pasta do relatório criada e README atualizado" />
+    <MESSAGE value="Movimento do escudo pronto \o/ \o/ \o/ \o/ \o/" />
+    <MESSAGE value="Limpeza do código + pasta de texturas" />
+    <MESSAGE value="Rosto e cabelo prontos" />
+    <MESSAGE value="Roupa do Capitão América pronta" />
+    <MESSAGE value="Escudo redesenhado" />
+    <MESSAGE value="Textura adicionada na grama (falta arrumar)" />
+    <MESSAGE value="Movimentos individuais das partes do humanoide" />
+    <MESSAGE value="Versão semifinal, aguardando últimos ajustes" />
+    <MESSAGE value="CÓDIGO FINALIZADO" />
+    <option name="LAST_COMMIT_MESSAGE" value="CÓDIGO FINALIZADO" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file:///usr/include/GL/freeglut_std.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="399" column="25" selection-start-line="399" selection-start-column="25" selection-end-line="399" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/linguica.txt" />
+    <entry file="file:///usr/include/GL/gl.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="991" column="22" selection-start-line="991" selection-start-column="22" selection-end-line="991" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/capitao.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24396">
+          <caret line="1780" column="30" selection-start-line="1780" selection-start-column="30" selection-end-line="1780" selection-end-column="30" />
+          <folding>
+            <element signature="e#98#118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/textures/grama.bmp">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="162">
+            <caret line="9" selection-start-line="9" selection-end-line="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

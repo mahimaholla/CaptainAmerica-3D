@@ -1775,28 +1775,28 @@ void leituraTeclado(unsigned char tecla) {
         case 'Y':   // trazer camera para cima
             posicaoCameraY += 0.01;
             break;
-        case 'z':   // zoom in
+        case 'z':   // zoom out
             posicaoCameraZ -= 0.01;
             break;
-        case 'Z':   // zoom out
+        case 'Z':   // zoom in
             posicaoCameraZ += 0.01;
             break;
-        case 'w':   // diminuir angulo da camera em X
+        case 'w':   // inclinar camera para cima, em X
             anguloCameraX -= 2;
             break;
-        case 'W':   // aumentar angulo da camera em X
+        case 'W':   // inclinar camera para baixo, em X
             anguloCameraX += 2;
             break;
-        case 'a':   // diminuir angulo da camera em Y
+        case 'a':   // virar camera para a esquerda, em Y
             anguloCameraY -= 2;
             break;
-        case 'A':   // aumentar angulo da camera em Y
+        case 'A':   // virar camera para a direita, em Y
             anguloCameraY += 2;
             break;
-        case 'd':   // diminuir angulo da camera em Z
+        case 'd':   // entortar camera para a esquerda, em Z
             anguloCameraZ -= 2;
             break;
-        case 'D':   // aumentar angulo da camera em Z
+        case 'D':   // entortar camera para a direita, em Z
             anguloCameraZ += 2;
             break;
 
