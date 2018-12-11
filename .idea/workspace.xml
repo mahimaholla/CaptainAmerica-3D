@@ -11,19 +11,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c933020-6c6c-48ad-8be6-3128916be1ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/capitao.c" beforeDir="false" afterPath="$PROJECT_DIR$/capitao.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ComputacaoGraficaAJB.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ComputacaoGraficaAJB.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ComputacaoGraficaAJB.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+    <list default="true" id="2c933020-6c6c-48ad-8be6-3128916be1ee" name="Default Changelist" comment="TRABALHO FINALIZADO">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/capitao.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24396">
-              <caret line="1780" column="30" selection-start-line="1780" selection-start-column="30" selection-end-line="1780" selection-end-column="30" />
+            <state relative-caret-position="177">
+              <caret line="2307" lean-forward="true" selection-start-line="2307" selection-end-line="2307" />
               <folding>
                 <element signature="e#98#118#0" expanded="true" />
               </folding>
@@ -131,7 +120,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -142,12 +130,18 @@
             <path>
               <item name="ComputacaoGraficaAJB" type="b2602c69:ProjectViewProjectNode" />
               <item name="ComputacaoGraficaAJB" type="462c0819:PsiDirectoryNode" />
-              <item name="report" type="462c0819:PsiDirectoryNode" />
+              <item name="relatorio-video" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ComputacaoGraficaAJB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ComputacaoGraficaAJB" type="462c0819:PsiDirectoryNode" />
+              <item name="textures" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -247,6 +241,7 @@
       <workItem from="1544270413109" duration="35000" />
       <workItem from="1544270495376" duration="1145000" />
       <workItem from="1544272595512" duration="3403000" />
+      <workItem from="1544498755326" duration="1376000" />
     </task>
     <task id="LOCAL-00001" summary="Arquivo inicializado com OpenGL">
       <created>1540929086213</created>
@@ -430,11 +425,18 @@
       <option name="project" value="LOCAL" />
       <updated>1544243455636</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="TRABALHO FINALIZADO">
+      <created>1544500096976</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1544500096977</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228421000" />
+    <option name="totallyTimeSpent" value="229797000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -447,8 +449,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16465257" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16691843" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -477,7 +480,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Projeção e Reshape (ainda não testados)" />
     <MESSAGE value="Projeção pronta, fundo pintado, movimentações da câmera prontas" />
     <MESSAGE value="Projeção, fundo e movimentações da câmera prontos" />
     <MESSAGE value="Cenário e personagem iniciados" />
@@ -502,7 +504,8 @@
     <MESSAGE value="Movimentos individuais das partes do humanoide" />
     <MESSAGE value="Versão semifinal, aguardando últimos ajustes" />
     <MESSAGE value="CÓDIGO FINALIZADO" />
-    <option name="LAST_COMMIT_MESSAGE" value="CÓDIGO FINALIZADO" />
+    <MESSAGE value="TRABALHO FINALIZADO" />
+    <option name="LAST_COMMIT_MESSAGE" value="TRABALHO FINALIZADO" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file:///usr/include/GL/freeglut_std.h">
@@ -522,8 +525,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/capitao.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24396">
-          <caret line="1780" column="30" selection-start-line="1780" selection-start-column="30" selection-end-line="1780" selection-end-column="30" />
+        <state relative-caret-position="177">
+          <caret line="2307" lean-forward="true" selection-start-line="2307" selection-end-line="2307" />
           <folding>
             <element signature="e#98#118#0" expanded="true" />
           </folding>
